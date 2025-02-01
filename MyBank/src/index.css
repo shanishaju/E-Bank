@@ -1,0 +1,30 @@
+.border{
+    border: 2px solid rgb(106, 47, 106);
+}
+form{
+    padding:50px;
+    border-radius: 5px;
+    align-items: center;
+    justify-content: center;
+    
+}
+.textfield{
+    margin-top:10px;
+    width: 100%;
+}
+.Button{
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.maindiv{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.box{
+    justify-content: center;
+    display: flex;
+}
+
