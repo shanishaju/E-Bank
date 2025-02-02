@@ -12,6 +12,9 @@ form{
     margin-top:10px;
     width: 100%;
 }
+#textfield1{
+    width: 50%;
+}
 .Button{
     margin-top: 10px;
     display: flex;
@@ -28,3 +31,16 @@ form{
     display: flex;
 }
 
+.maindiv2{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 500px;
+}
+.reghead{
+    text-align: center;
+}
+
+.imgdiv{
+    height: 500px;
+}

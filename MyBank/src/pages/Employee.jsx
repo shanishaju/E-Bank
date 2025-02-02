@@ -53,7 +53,6 @@ function Employee() {
                     >
                         <Tab value={0} label="WITHDRAWAL" {...a11yProps(0)} />
                         <Tab value={1} label="DEPOSIT" {...a11yProps(1)} />
-                        <Tab value={2} label=" USER-REGISTRATION" {...a11yProps(2)} />
                     </Tabs>
                 </Box>
 
@@ -115,39 +114,7 @@ function Employee() {
                     </div>
                 </TabPanel>
 
-                <TabPanel value={value} index={2}>
-                        <div className='bg-light p-5 rounded' style={{ width: '500px' }}>
 
-                            <form className='mt-3  border border-dark '>
-                                <div className="mb-3 ">
-                                    {/* <p className='text-danger text'>Name</p> */}
-                                    <TextField id="outlined-basic" label="Name" name='principle' variant="outlined" className='textfield' />
-                                </div>
-                                <div className="mb-3 textfield">
-                                    {/* <p className='text-danger text'>Account Number</p> */}
-                                    <TextField classes="TextField" id="outlined-basic" label="Age" name='rate' variant="outlined" className='textfield' />
-                                    
-                                </div>
-
-                                <div className="mb-3 textfield">
-                                    {/* <p className='text-danger text'>Account Number</p> */}
-                                    <TextField classes="TextField" id="outlined-basic" label="Phone Number" name='rate' variant="outlined" className='textfield' />
-                                </div>
-
-                                <div className="mb-3 textfield">
-                                    {/* <p className='text-danger'>Amount</p> */}
-                                    <TextField id="outlined-basic" label="Account Number" name='year' variant="outlined" className='textfield' />
-                                </div>
-
-                                {/* Buttons with gap */}
-                                <div className=' Button d-flex justify-content-between w-100 mt-5' style={{ gap: '50px' }}>
-                                    <Button variant="contained" color="info" style={{ width: '190px', height: '60px' }}>CANCEL</Button>
-                                    <Button variant="contained" color="success" style={{ width: '190px', height: '60px' }}>SAVE</Button>
-
-                                </div>
-                            </form>
-                    </div>
-                </TabPanel>
                 </div>
 
             </div>
