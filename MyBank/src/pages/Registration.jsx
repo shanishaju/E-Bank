@@ -33,12 +33,12 @@ function Registration() {
                 >
                     <div className="bg-light p-4 rounded " style={{ width: "100%" }}>
                         <form className="mt-3">
-                            <div className="mb-3" style={{ display: "flex", marginBottom: "10px", }}>
-                                <TextField id="text" label="First Name" name="name" variant="outlined" fullWidth />
-                                <TextField id="name" label="Last Name" name="name" variant="outlined" fullWidth />
-
+                            <div className="mb-3" style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
+                                <TextField id="first-name" label="First Name" name="firstName" variant="outlined" fullWidth />
+                                <TextField id="last-name" label="Last Name" name="lastName" variant="outlined" fullWidth />
 
                             </div>
+
                             <div className="mb-3" style={{ marginBottom: "10px", display: "flex" }}>
                                 <div style={{ marginRight: "50px" }}>
                                     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -58,10 +58,10 @@ function Registration() {
 
                                         <FormControlLabel
                                             value="men"
-                                            control={<Radio />} en
-                                            label="Men"
+                                            control={<Radio />}
+                                            label="Male"
                                             labelPlacement="end"
-                                        />                                    
+                                        />
                                         <FormControlLabel value="female" control={<Radio />} label="Female" />
 
                                     </RadioGroup>
@@ -71,11 +71,11 @@ function Registration() {
                             <div className="mb-3" style={{ marginBottom: "10px" }}>
                                 <TextField id="phone" label="Phone Number" name="phone" variant="outlined" fullWidth />
                             </div>
-                            <div className="mb-3" style={{ marginBottom: "10px" }}>
+                            {/* <div className="mb-3" style={{ marginBottom: "10px" }}>
                                 <TextField id="account" label="Account Number" name="account" variant="outlined" fullWidth />
-                            </div>
+                            </div> */}
 
-                            <div style={{ marginBottom: "10px", display: "flex", justifyContent: "space-between" }}>
+                            <div style={{ marginBottom: "10px", display: "flex", justifyContent: "space-between", gap: "10px"}}>
                                 <Button variant="contained" color="info" style={{ flex: 1, height: "50px" }}>
                                     CANCEL
                                 </Button>
