@@ -8,6 +8,9 @@ const cors = require('cors')
 //import router
 const router = require('./routes')
 
+//import connection.js
+require('./connection')
+
 //create server
 const pfServer = express()
 //use cors //cors use to communicate with the view
