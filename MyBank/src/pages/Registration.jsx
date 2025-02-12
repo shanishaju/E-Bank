@@ -21,19 +21,43 @@ function Registration() {
         phonenum: ''
     });
     console.log(userDetails);
-    
-    const handleRegister = async()=>{
-     const {fname,lname,dateOfBirth,phonenum} = userDetails //destructuring
-      
-     if(!fname || !lname || !dateOfBirth || !phonenum){
-        alert("Please fill the fields completely");
-     }
-     else{
-        const response =await registerApi(userDetails);
-        console.log(response);
-        }
 
-     
+
+    //validation
+    const [error, setError] = useState({});
+
+    const validate = () => {
+        let temerror = {};
+        if (!userDetails.fname) temerror.fname = "First Name is required";
+        if (!userDetails.lname) temerror.lname = "Last Name is required";
+        if (!userDetails.dateOfBirth) temerror.dateOfBirth = "Date of Birth is required";
+        if (!userDetails.phonenum) temerror.phonenum = "Phone Number is required";
+        else if (!/^\d{10}$/.test(userDetails.phonenum)) temerror.phonenum = "Enter a valid 10-digit phone number";
+
+
+        setError(temerror);
+        return Object.keys(temerror).length === 0;
+
+    }
+
+
+
+    const handleRegister = async () => {
+        //  const {fname,lname,dateOfBirth,phonenum} = userDetails //destructuring
+
+        //  if(!fname || !lname || !dateOfBirth || !phonenum){
+        //     alert("Please fill the fields completely");
+        //  }
+        //  else{
+        //     const response =await registerApi(userDetails);
+        //     console.log(response);
+        //     }
+        if (!validate()) return;
+        const response = await registerApi(userDetails);
+        console.log(response);
+
+
+
     }
 
     return (
@@ -56,8 +80,8 @@ function Registration() {
                     <div className="bg-light p-4 rounded" style={{ width: "100%" }}>
                         <form className="mt-3">
                             <div className="mb-3" style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
-                                <TextField id="first-name" label="First Name" name="firstName" variant="outlined" fullWidth onChange={(e) => setUserDetails({ ...userDetails, fname: e.target.value })} />
-                                <TextField id="last-name" label="Last Name" name="lastName" variant="outlined" fullWidth onChange={(e) => setUserDetails({ ...userDetails, lname: e.target.value })} />
+                                <TextField id="first-name" label="First Name" name="firstName" variant="outlined" fullWidth onChange={(e) => setUserDetails({ ...userDetails, fname: e.target.value })} error={!!error.fname} helperText={error.fname}/>
+                                <TextField id="last-name" label="Last Name" name="lastName" variant="outlined" fullWidth onChange={(e) => setUserDetails({ ...userDetails, lname: e.target.value })} error={!!error.lname} helperText={error.lname} />
                             </div>
 
                             <div className="mb-3" style={{ marginBottom: "10px", display: "flex" }}>
@@ -65,13 +89,14 @@ function Registration() {
                                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                                         <DatePicker
                                             label="DoB"
-                                            value={userDetails.dateOfBirth ? dayjs(userDetails.dateOfBirth) : null} // ✅ Convert back to Day.js for UI
+                                            value={userDetails.dateOfBirth ? dayjs(userDetails.dateOfBirth) : null} 
                                             onChange={(newValue) =>
                                                 setUserDetails({
                                                     ...userDetails,
-                                                    dateOfBirth: newValue ? newValue.format("YYYY-MM-DD") : "", // ✅ Store as string
+                                                    dateOfBirth: newValue ? newValue.format("YYYY-MM-DD") : "", 
                                                 })
                                             }
+                                            error={!!error.dateOfBirth} helperText={error.dateOfBirth}
                                         />
                                     </LocalizationProvider>
                                     <p style={{ display: "none" }}>Selected Date: {userDetails.dateOfBirth || "None"}</p>
@@ -81,8 +106,8 @@ function Registration() {
                                     <RadioGroup
                                         row
                                         name="gender"
-                                        value={userDetails.gender} // ✅ Ensures the selected value is shown
-                                        onChange={(e) => setUserDetails({ ...userDetails, gender: e.target.value })} // ✅ Updates state on change
+                                        value={userDetails.gender} 
+                                        onChange={(e) => setUserDetails({ ...userDetails, gender: e.target.value })} 
                                     >
                                         <FormControlLabel value="male" control={<Radio />} label="Male" />
                                         <FormControlLabel value="female" control={<Radio />} label="Female" />
@@ -91,7 +116,7 @@ function Registration() {
                             </div>
 
                             <div className="mb-3" style={{ marginBottom: "10px" }}>
-                                <TextField id="phone" label="Phone Number" name="phone" variant="outlined" fullWidth onChange={(e) => setUserDetails({ ...userDetails, phonenum: e.target.value })} />
+                                <TextField id="phone" label="Phone Number" name="phone" variant="outlined" fullWidth onChange={(e) => setUserDetails({ ...userDetails, phonenum: e.target.value })} error={!!error.phonenum} helperText={error.phonenum} />
                             </div>
 
                             <div style={{ marginBottom: "10px", display: "flex", justifyContent: "space-between", gap: "10px" }}>
