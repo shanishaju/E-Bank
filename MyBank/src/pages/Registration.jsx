@@ -57,6 +57,19 @@ function Registration() {
         // console.log(result.data.message);
         if (result.status == 200) {
             alert(result.data.message);
+
+            //clear datas
+            setUserDetails({
+                fname: '',
+                lname: '',
+                gender: "male",
+                dateOfBirth: '',
+                phonenum: ''
+
+            })
+
+
+
         }
         else {
             alert(`Error message: ${result.response.data.message}`)
@@ -84,8 +97,29 @@ function Registration() {
                     <div className="bg-light p-4 rounded" style={{ width: "100%" }}>
                         <form className="mt-3">
                             <div className="mb-3" style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
-                                <TextField id="first-name" label="First Name" name="firstName" variant="outlined" fullWidth onChange={(e) => setUserDetails({ ...userDetails, fname: e.target.value })} error={!!error.fname} helperText={error.fname} />
-                                <TextField id="last-name" label="Last Name" name="lastName" variant="outlined" fullWidth onChange={(e) => setUserDetails({ ...userDetails, lname: e.target.value })} error={!!error.lname} helperText={error.lname} />
+                                <TextField
+                                    id="first-name"
+                                    label="First Name"
+                                    name="firstName"
+                                    variant="outlined"
+                                    value={userDetails.fname}
+                                    fullWidth
+                                    onChange={(e) =>
+                                        setUserDetails({ ...userDetails, fname: e.target.value })}
+                                    error={!!error.fname}
+                                    helperText={error.fname}
+                                />
+                                <TextField
+                                    id="last-name"
+                                    label="Last Name"
+                                    name="lastName"
+                                    variant="outlined"
+                                    value={userDetails.lname}
+                                    fullWidth onChange={(e) =>
+                                        setUserDetails({ ...userDetails, lname: e.target.value })}
+                                    error={!!error.lname}
+                                    helperText={error.lname}
+                                />
                             </div>
 
                             <div className="mb-3" style={{ marginBottom: "10px", display: "flex" }}>
@@ -120,7 +154,18 @@ function Registration() {
                             </div>
 
                             <div className="mb-3" style={{ marginBottom: "10px" }}>
-                                <TextField id="phone" label="Phone Number" name="phone" variant="outlined" fullWidth onChange={(e) => setUserDetails({ ...userDetails, phonenum: e.target.value })} error={!!error.phonenum} helperText={error.phonenum} />
+                                <TextField
+                                    id="phone"
+                                    label="Phone Number"
+                                    name="phone"
+                                    variant="outlined"
+                                    value={userDetails.phonenum}
+                                    fullWidth
+                                    onChange={(e) =>
+                                        setUserDetails({ ...userDetails, phonenum: e.target.value })}
+                                    error={!!error.phonenum}
+                                    helperText={error.phonenum}
+                                />
                             </div>
 
                             <div style={{ marginBottom: "10px", display: "flex", justifyContent: "space-between", gap: "10px" }}>
