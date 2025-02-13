@@ -1,37 +1,72 @@
 const users = require("../modal/userModel");
 
-//Account number generator
+// Account number generator
 const getAccountNumber = async () => {
-  const lastUser = await users.findOne().sort({ accountnum: -1 }); // Get last user by account number
+  const lastUser = await users.findOne().sort({ accountnum: -1 });
   return lastUser ? lastUser.accountnum + 1 : 1000; // Start from 1000 if no user exists
 };
-//register function
 
+// Function to calculate age from date of birth
+const calculateAge = (dob) => {
+  const birthDate = new Date(dob);
+  //console.log(birthDate); //1996-02-21T00:00:00.000Z
+
+  //creating currect date
+  const today = new Date();
+
+  let age = today.getFullYear() - birthDate.getFullYear(); //getFullYear() is a JavaScript method used to get the 4-digit year from a Date object
+  const monthDiff = today.getMonth() - birthDate.getMonth();//.getMonth() returns the month as a number (0-11).
+
+
+  // If birth month is ahead in the current year or it's the same month but a later day, reduce age by 1
+  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+  
+  return age;
+};
+
+// Register function
 exports.registerController = async (req, res) => {
   const { fname, lname, gender, dateOfBirth, phonenum } = req.body;
+
   try {
     if (!fname || !lname || !gender || !dateOfBirth || !phonenum) {
-      res.status(400).json({ message: "All fields are required!" });
+      return res.status(400).json({ message: "All fields are required!" });
     }
-    const existinguser = await users.findOne({ phone:phonenum }); //model:name
-    if (existinguser) {
-      res.status(406).json("Account already exist");
-    } else {
-      const accountnum = await getAccountNumber(); // Generate new account number
 
-      const newuser = new users({
-        firstname: fname,
-        lastname: lname,
-        accountnum: accountnum,
-        dob: dateOfBirth,
-        gender: gender,
-        phone: phonenum,
-      });
-
-      await newuser.save();
-      res.status(200).json(newuser);
+    if (!/^\d{10}$/.test(phonenum)) {
+      return res.status(400).json({ message: "Invalid phone number!" });
     }
+
+    // Validate Age
+    const age = calculateAge(dateOfBirth);
+    if (age < 18) {
+      return res.status(400).json({ message: "You must be at least 18 years old to register." });
+    }
+
+    const existingUser = await users.findOne({ phone: phonenum });
+    if (existingUser) {
+      return res.status(400).json({ message: "This number is already registered with another account" });
+    }
+
+    // Generate new account number
+    const accountnum = await getAccountNumber();
+
+    // Create and save new user
+    const newUser = new users({
+      firstname: fname,
+      lastname: lname,
+      accountnum,
+      dob: dateOfBirth,
+      gender,
+      phone: phonenum,
+    });
+
+    await newUser.save();
+    return res.status(200).json({ message: "Account created successfully" });
+
   } catch (error) {
-    res.status(401).json(`registration failed due to ${error}`);
+    return res.status(500).json({ message: `Registration failed due to ${error.message}` });
   }
 };

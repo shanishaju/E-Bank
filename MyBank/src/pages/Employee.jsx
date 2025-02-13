@@ -42,21 +42,21 @@ function Employee() {
         <>
             <div className='maindiv'>
                 <div>
-                    
-                <Box sx={{ width: '100%' }} className="box">
-                    <Tabs
-                        value={value}
-                        onChange={handleChange}
-                        textColor="secondary"
-                        indicatorColor="secondary"
-                        aria-label="secondary tabs example"
-                    >
-                        <Tab value={0} label="WITHDRAWAL" {...a11yProps(0)} />
-                        <Tab value={1} label="DEPOSIT" {...a11yProps(1)} />
-                    </Tabs>
-                </Box>
 
-                <TabPanel value={value} index={0}>
+                    <Box sx={{ width: '100%' }} className="box">
+                        <Tabs
+                            value={value}
+                            onChange={handleChange}
+                            textColor="secondary"
+                            indicatorColor="secondary"
+                            aria-label="secondary tabs example"
+                        >
+                            <Tab value={0} label="WITHDRAWAL" {...a11yProps(0)} />
+                            <Tab value={1} label="DEPOSIT" {...a11yProps(1)} />
+                        </Tabs>
+                    </Box>
+
+                    <TabPanel value={value} index={0}>
                         <div className='bg-light p-5 rounded' style={{ width: '500px' }}>
 
                             <form className='mt-3  border border-dark '>
@@ -67,7 +67,7 @@ function Employee() {
 
                                 <div className="mb-3 textfield">
                                     {/* <p className='text-danger text'>Account Number</p> */}
-                                    <TextField  id="outlined-basic" label="Account Number" name='rate' variant="outlined" className='textfield' />
+                                    <TextField id="outlined-basic" label="Account Number" name='rate' variant="outlined" className='textfield' />
                                 </div>
 
                                 <div className="mb-3 textfield">
@@ -82,37 +82,37 @@ function Employee() {
 
                                 </div>
                             </form>
-                    </div>
-                </TabPanel>
+                        </div>
+                    </TabPanel>
 
-                <TabPanel value={value} index={1}>
-                    <div className='bg-light p-5 rounded' style={{ width: '500px' }}>
+                    <TabPanel value={value} index={1}>
+                        <div className='bg-light p-5 rounded' style={{ width: '500px' }}>
 
-                        <form className='mt-3  border border-dark '>
-                            <div className="mb-3 textfield">
-                                {/* <p className='text-danger text'>Name</p> */}
-                                <TextField id="outlined-basic" label="Name" name='principle' variant="outlined" className='textfield' />
-                            </div>
+                            <form className='mt-3  border border-dark '>
+                                <div className="mb-3 textfield">
+                                    {/* <p className='text-danger text'>Name</p> */}
+                                    <TextField id="outlined-basic" label="Name" name='principle' variant="outlined" className='textfield' />
+                                </div>
 
-                            <div className="mb-3 textfield">
-                                {/* <p className='text-danger text'>Account Number</p> */}
-                                <TextField classes="TextField" id="outlined-basic" label="Account Number" name='rate' variant="outlined" className='textfield' />
-                            </div>
+                                <div className="mb-3 textfield">
+                                    {/* <p className='text-danger text'>Account Number</p> */}
+                                    <TextField classes="TextField" id="outlined-basic" label="Account Number" name='rate' variant="outlined" className='textfield' />
+                                </div>
 
-                            <div className="mb-3 textfield">
-                                {/* <p className='text-danger'>Amount</p> */}
-                                <TextField id="outlined-basic" label="Amount" name='year' variant="outlined" className='textfield' />
-                            </div>
+                                <div className="mb-3 textfield">
+                                    {/* <p className='text-danger'>Amount</p> */}
+                                    <TextField id="outlined-basic" label="Amount" name='year' variant="outlined" className='textfield' />
+                                </div>
 
-                            {/* Buttons with gap */}
-                            <div className=' Button d-flex justify-content-between ' style={{ gap: '50px' }}>
-                                <Button variant="contained" color="info" style={{ width: '190px', height: '60px' }}>CANCEL</Button>
-                                <Button variant="contained" color="success" style={{ width: '190px', height: '60px' }}>DEPOSIT</Button>
+                                {/* Buttons with gap */}
+                                <div className=' Button d-flex justify-content-between ' style={{ gap: '50px' }}>
+                                    <Button variant="contained" color="info" style={{ width: '190px', height: '60px' }}>CANCEL</Button>
+                                    <Button variant="contained" color="success" style={{ width: '190px', height: '60px' }}>DEPOSIT</Button>
 
-                            </div>
-                        </form>
-                    </div>
-                </TabPanel>
+                                </div>
+                            </form>
+                        </div>
+                    </TabPanel>
 
 
                 </div>

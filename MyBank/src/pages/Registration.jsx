@@ -16,11 +16,11 @@ function Registration() {
     const [userDetails, setUserDetails] = useState({
         fname: '',
         lname: '',
-        gender: "male",  // ✅ Updates when user selects a radio button
+        gender: "male",
         dateOfBirth: '',
         phonenum: ''
     });
-    console.log(userDetails);
+    // console.log(userDetails);
 
 
     //validation
@@ -53,11 +53,15 @@ function Registration() {
         //     console.log(response);
         //     }
         if (!validate()) return;
-        const response = await registerApi(userDetails);
-        console.log(response);
+        const result = await registerApi(userDetails);
+        // console.log(result.data.message);
+        if (result.status == 200) {
+            alert(result.data.message);
+        }
+        else {
+            alert(`Error message: ${result.response.data.message}`)
 
-
-
+        }
     }
 
     return (
@@ -80,7 +84,7 @@ function Registration() {
                     <div className="bg-light p-4 rounded" style={{ width: "100%" }}>
                         <form className="mt-3">
                             <div className="mb-3" style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
-                                <TextField id="first-name" label="First Name" name="firstName" variant="outlined" fullWidth onChange={(e) => setUserDetails({ ...userDetails, fname: e.target.value })} error={!!error.fname} helperText={error.fname}/>
+                                <TextField id="first-name" label="First Name" name="firstName" variant="outlined" fullWidth onChange={(e) => setUserDetails({ ...userDetails, fname: e.target.value })} error={!!error.fname} helperText={error.fname} />
                                 <TextField id="last-name" label="Last Name" name="lastName" variant="outlined" fullWidth onChange={(e) => setUserDetails({ ...userDetails, lname: e.target.value })} error={!!error.lname} helperText={error.lname} />
                             </div>
 
@@ -89,11 +93,11 @@ function Registration() {
                                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                                         <DatePicker
                                             label="DoB"
-                                            value={userDetails.dateOfBirth ? dayjs(userDetails.dateOfBirth) : null} 
+                                            value={userDetails.dateOfBirth ? dayjs(userDetails.dateOfBirth) : null}
                                             onChange={(newValue) =>
                                                 setUserDetails({
                                                     ...userDetails,
-                                                    dateOfBirth: newValue ? newValue.format("YYYY-MM-DD") : "", 
+                                                    dateOfBirth: newValue ? newValue.format("YYYY-MM-DD") : "",
                                                 })
                                             }
                                             error={!!error.dateOfBirth} helperText={error.dateOfBirth}
@@ -106,8 +110,8 @@ function Registration() {
                                     <RadioGroup
                                         row
                                         name="gender"
-                                        value={userDetails.gender} 
-                                        onChange={(e) => setUserDetails({ ...userDetails, gender: e.target.value })} 
+                                        value={userDetails.gender}
+                                        onChange={(e) => setUserDetails({ ...userDetails, gender: e.target.value })}
                                     >
                                         <FormControlLabel value="male" control={<Radio />} label="Male" />
                                         <FormControlLabel value="female" control={<Radio />} label="Female" />
