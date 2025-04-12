@@ -1,8 +1,28 @@
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* body{
+    background: linear-gradient(to right, #ff7b00, #ff9800);
+
+} */
+ .mainclass{
+    background: linear-gradient(to right, #0d1051, #4c9eba);
+ }
 .border{
     border: 2px solid rgb(106, 47, 106);
 }
+.button1{
+    background-color: #ed790cfd !important;
+}
+.button2{
+    background-color: #ed790cb8 !important;
+
+}
 form{
-    padding:50px;
+    padding:70px;
     border-radius: 5px;
     align-items: center;
     justify-content: center;
@@ -35,7 +55,7 @@ form{
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 500px;
+    /* height: 500px; */
 }
 .reghead{
     text-align: center;
