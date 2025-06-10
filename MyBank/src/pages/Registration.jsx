@@ -10,9 +10,13 @@ import dayjs from "dayjs";
 import { useForm, Controller } from 'react-hook-form';
 import { registerApi } from '../services/allApi';
 import image from '../assets/revenue-growth.gif'
+import { Link, useNavigate } from 'react-router-dom';
 
 function Registration() {
-    const { register, handleSubmit, control, formState: { errors, isSubmitting }, reset } = useForm();
+    const navigate =useNavigate()
+    const { register, handleSubmit, control, formState: { errors, isSubmitting }, reset } = useForm({
+        mode: "onChange"
+    });
 
     const onSubmit = async (data) => {
         console.log(data);
@@ -22,6 +26,8 @@ function Registration() {
             if (result.status === 200) {
                 alert(result.data.message);
                 reset(); // Reset all form fields
+                navigate('/login')
+                 
             } else {
                 alert(`Error: ${result.response.data.message}`);
             }
@@ -36,7 +42,7 @@ function Registration() {
     };
 
     return (
-        <div className="container mainclass mt-5" style={{ paddingTop: "100px", height: "100vh" }}>
+        <div className="container mainclass mt-5" style={{ paddingTop: "100px", height: "110vh" }}>
 
             <div className="row maindiv2" style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <div className="col-md-2"></div>
@@ -75,13 +81,13 @@ function Registration() {
                 </div>
 
                 <div className="col-md-4" style={{
-                    width: "50%", backgroundColor: "white", borderRadius: "100px 0px 0px 100px", overflow: 'hidden', borderLeft: "6px dotted #0d1051"
+                    width: "50%", backgroundColor: "white", borderRadius: "100px 0px 0px 100px", overflow: 'hidden', borderLeft: "6px dotted #284c7e"
 
 
                 }}>
-                    <h2 className="text-center reghead mb-4" style={{ color: "grey", marginTop: "20px" }}>
+                    <h1 className="text-center reghead mb-4" style={{ color: "grey", marginTop: "20px" }}>
                         Registration Form
-                    </h2>
+                    </h1>
 
                     <div className="bg-light p-4 rounded" style={{ width: "100%", backgroundColor: "white" }}>
                         <form className="mt-3" onSubmit={handleSubmit(onSubmit)}>
@@ -146,6 +152,23 @@ function Registration() {
                                     />
                                 </div>
                             </div>
+                            <div className="mb-3" style={{ marginBottom: "10px" }}>
+                                <TextField
+                                    label="Email"
+                                    variant="outlined"
+                                    fullWidth
+                                    {...register('email', {
+                                        required: "Email is required",
+                                        pattern: {
+                                            value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                            message: "Enter a valid email address"
+                                        }
+                                    })}
+
+                                    error={!!errors.email}
+                                    helperText={errors.email?.message}
+                                />
+                            </div>
 
                             <div className="mb-3" style={{ marginBottom: "10px" }}>
                                 <TextField
@@ -160,8 +183,29 @@ function Registration() {
                                     helperText={errors.phonenum?.message}
                                 />
                             </div>
+                            <div className="mb-3" style={{ marginBottom: "10px" }}>
+                                <TextField
+                                    label="Password"
+                                    variant="outlined"
+                                    type='password'
+                                    fullWidth
+                                    {...register('password', {
+                                        required: "Password is required",
+                                        //regex
+                                        pattern: {
+                                            value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@@#$%^&*()_+])[A-Za-z\d@#$%^&*() _+]{8,}$/,
+                                            message: "Password should include at least one uppercase and lowercase letter, one numeric value and one special character "
+                                        }
+
+
+
+                                    })}
+                                    error={!!errors.password}
+                                    helperText={errors.password?.message}
+                                />
+                            </div>
                             <div style={{ marginBottom: "10px", display: "flex", justifyContent: "space-between", gap: "10px" }}>
-                                <Button className='button2'  variant="contained" style={{ flex: 1, height: "50px" }} onClick={handleCancel}>
+                                <Button className='button2' variant="contained" style={{ flex: 1, height: "50px" }} onClick={handleCancel}>
                                     CANCEL
                                 </Button>
                                 <Button className='button1' type="submit" style={{ flex: 1, height: "50px" }} variant="contained" disabled={isSubmitting}>
@@ -169,12 +213,14 @@ function Registration() {
                                 </Button>
                             </div>
 
-
+                            <p className='mt-5' style={{color:"grey"}}>Already have an account, Click here to <Link to={'/login'}> <span style={{color:'orange'}}>Login</span> </Link></p>
                         </form>
                     </div>
                 </div>
                 <div className="col-md-2"></div>
+
             </div>
+
         </div>
     );
 }

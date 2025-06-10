@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 *
 {
     margin: 0;
@@ -10,6 +12,7 @@
 } */
  .mainclass{
     background: linear-gradient(to right, #0d1051, #4c9eba);
+    
  }
 .border{
     border: 2px solid rgb(106, 47, 106);

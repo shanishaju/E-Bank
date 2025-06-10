@@ -1,8 +1,10 @@
-const users = require("../modal/userModel");
+const User = require("../modal/userModel");
+const jwt = require("jsonwebtoken");
 
+//Registartion
 // Account number generator
 const getAccountNumber = async () => {
-  const lastUser = await users.findOne().sort({ accountnum: -1 });
+  const lastUser = await User.findOne().sort({ accountnum: -1 });
   return lastUser ? lastUser.accountnum + 1 : 1000; // Start from 1000 if no user exists
 };
 
@@ -15,23 +17,26 @@ const calculateAge = (dob) => {
   const today = new Date();
 
   let age = today.getFullYear() - birthDate.getFullYear(); //getFullYear() is a JavaScript method used to get the 4-digit year from a Date object
-  const monthDiff = today.getMonth() - birthDate.getMonth();//.getMonth() returns the month as a number (0-11).
-
+  const monthDiff = today.getMonth() - birthDate.getMonth(); //.getMonth() returns the month as a number (0-11).
 
   // If birth month is ahead in the current year or it's the same month but a later day, reduce age by 1
-  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+  if (
+    monthDiff < 0 ||
+    (monthDiff === 0 && today.getDate() < birthDate.getDate())
+  ) {
     age--;
   }
-  
+
   return age;
 };
 
 // Register function
 exports.registerController = async (req, res) => {
-  const { fname, lname, gender, dateOfBirth, phonenum } = req.body;
+  const { fname, lname, gender, dateOfBirth, email, phonenum, password } =
+    req.body;
 
   try {
-    if (!fname || !lname || !gender || !dateOfBirth || !phonenum) {
+    if (!fname || !lname || !gender || !dateOfBirth || !email || !phonenum || !password) {
       return res.status(400).json({ message: "All fields are required!" });
     }
 
@@ -45,28 +50,53 @@ exports.registerController = async (req, res) => {
       return res.status(400).json({ message: "You must be at least 18 years old to register." });
     }
 
-    const existingUser = await users.findOne({ phone: phonenum });
+    const existingUser = await User.findOne({ phone: phonenum });
     if (existingUser) {
-      return res.status(400).json({ message: "This number is already registered with another account" });
+      return res.status(400).json({
+          message: "This number is already registered with another account",
+        });
     }
 
     // Generate new account number
     const accountnum = await getAccountNumber();
 
     // Create and save new user
-    const newUser = new users({
+    const newUser = new User({
       firstname: fname,
       lastname: lname,
       accountnum,
       dob: dateOfBirth,
       gender,
+      email,
       phone: phonenum,
+      password,
     });
 
     await newUser.save();
     return res.status(200).json({ message: "Account created successfully" });
-
   } catch (error) {
     return res.status(500).json({ message: `Registration failed due to ${error.message}` });
   }
 };
+
+//Login function
+exports.loginController = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    if (!email || !password) {
+      return res.status(400).json({ message: "All fields are required!" });
+    }
+    const existingUser = await User.findOne({ email, password });
+    if (existingUser) {
+      //jwt token generation can be added here
+      const token = jwt.sign({userId:existingUser._id},'supersecretkey');
+
+      return res.status(200).json({ message: "Login successful", user: existingUser ,token:token });
+    } else {
+      return res.status(400).json({ message: "Invalid email or password" });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: `Login failed due to ${error.message}` });
+  }
+};
+

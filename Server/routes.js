@@ -9,7 +9,8 @@ const router = new express.Router()
 //4setup path
 //register
 router.post('/register',userController.registerController)
-
+//login
+router.post('/login',userController.loginController)
  
 
 
