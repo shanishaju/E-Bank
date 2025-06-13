@@ -19,12 +19,17 @@ function Login() {
       if (result.status === 200) {
         alert(result.data.message)
         //token storing to session storage
-        // sessionStorage.setItem("existinguser",JSON.stringify(result.data.user))
-        // sessionStorage.setItem("token",result.data.token)
-        console.log(result.data.token);
+        sessionStorage.setItem("existinguser",JSON.stringify(result.data.user))
+        sessionStorage.setItem("token",result.data.token)
+        console.log("user",result.data.user);
+        console.log('token',result.data.token);
+        
    
         reset()
-        navigate('/account')
+       
+        setTimeout(()=>{
+          navigate('/account')
+         },1000)
 
       } else {
         alert(`Error: ${result.response.data.message}`)
@@ -119,7 +124,7 @@ function Login() {
                       //regex
                       pattern: {
                         value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&*()_+])[A-Za-z\d@#$%^&*()_+]{8,}$/,
-                        message: "Password should include at least on uppercase and lowercase letter, one numeric value and one special character "
+                        message: "Password should include at least one uppercase letter, one lowercase letter, one number, and one special character "
                       }
 
 

@@ -70,6 +70,7 @@ exports.registerController = async (req, res) => {
       email,
       phone: phonenum,
       password,
+      balance: 0
     });
 
     await newUser.save();
@@ -91,12 +92,37 @@ exports.loginController = async (req, res) => {
       //jwt token generation can be added here
       const token = jwt.sign({userId:existingUser._id},'supersecretkey');
 
-      return res.status(200).json({ message: "Login successful", user: existingUser ,token:token });
+      return res.status(200).json({ 
+        message: "Login successful", 
+        user: {
+                firstname: existingUser.firstname,
+                lastname: existingUser.lastname,
+                balance: existingUser.balance
+              },
+        token: token
+      });
     } else {
-      return res.status(400).json({ message: "Invalid email or password" });
+      return res.status(400).json({ message: "Email or password doesn't match" });
     }
   } catch (error) {
     return res.status(500).json({ message: `Login failed due to ${error.message}` });
   }
 };
+
+//test api
+exports.getAccountDetails = async (req, res) => {
+  try {
+    const userId = req.user.userId; // from decoded token
+    const user = await User.findById(userId).select("firstname lastname email phone accountnum balance");
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    return res.status(200).json({ user });
+  } catch (error) {
+    return res.status(500).json({ message: `Failed to fetch account details: ${error.message}` });
+  }
+};
+
 

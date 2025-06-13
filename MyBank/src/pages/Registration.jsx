@@ -19,7 +19,7 @@ function Registration() {
     });
 
     const onSubmit = async (data) => {
-        console.log(data);
+        // console.log(data);
 
         try {
             const result = await registerApi(data);
@@ -42,7 +42,7 @@ function Registration() {
     };
 
     return (
-        <div className="container mainclass mt-5" style={{ paddingTop: "100px", height: "110vh" }}>
+        <div className="container mainclass" style={{ paddingTop: "40px", height: "100vh" }}>
 
             <div className="row maindiv2" style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <div className="col-md-2"></div>
@@ -85,12 +85,12 @@ function Registration() {
 
 
                 }}>
-                    <h1 className="text-center reghead mb-4" style={{ color: "grey", marginTop: "20px" }}>
+                    <h1 className="text-center text-3xl text-gray-500 font-bold" style={{marginTop:"20px"}}>
                         Registration Form
                     </h1>
 
                     <div className="bg-light p-4 rounded" style={{ width: "100%", backgroundColor: "white" }}>
-                        <form className="mt-3" onSubmit={handleSubmit(onSubmit)}>
+                        <form onSubmit={handleSubmit(onSubmit)}>
                             <div className="mb-3" style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
                                 <div style={{ flex: 1 }}>
                                     <TextField
@@ -215,6 +215,7 @@ function Registration() {
 
                             <p className='mt-5' style={{color:"grey"}}>Already have an account, Click here to <Link to={'/login'}> <span style={{color:'orange'}}>Login</span> </Link></p>
                         </form>
+
                     </div>
                 </div>
                 <div className="col-md-2"></div>
