@@ -40,6 +40,13 @@ function Employee() {
 
     return (
         <>
+        
+        <div className='balance-card bg-light p-4 rounded shadow mb-4' style={{ width: '500px', margin: '0 auto' }}>
+            <h5 className='text-muted'>Available Balance</h5>
+            <h2 style={{ color: '#1976d2', fontWeight: 'bold' }}>₹ 12,500.75</h2>
+            <p className='text-secondary'>Last updated: 15 June 2025</p>
+        </div>
+        
             <div className='maindiv'>
                 
                 <div>
