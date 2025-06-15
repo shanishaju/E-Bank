@@ -49,7 +49,7 @@ function Login() {
   return (
     <>
       <div className="container mainclass mt-5" style={{ paddingTop: "100px", height: "100vh" }}>
-        <div className="row maindiv2" style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div className="row maindiv" style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div className="col-md-2"></div>
           <div className="col-md-8"
             style={{
@@ -81,16 +81,16 @@ function Login() {
 
           </div>
 
-          <div className="col-md-4" style={{
+          <div className="col-md-4 formdiv" style={{
             width: "50%", backgroundColor: "white", borderRadius: "100px 0px 0px 100px", overflow: 'hidden', borderLeft: "6px dotted #284c7e"
 
 
           }}>
-            <h1 className="text-center reghead mb-4" style={{ color: "grey", marginTop: "20px" }}>
-              Login Form
+            <h1 className="text-center text-3xl text-gray-500" style={{ color: "grey", marginTop: "50px" }}>
+              Login 
             </h1>
 
-            <div className="bg-light p-4 rounded" style={{ width: "100%", backgroundColor: "white" }}>
+            <div className="bg-light formbox p-4 rounded" style={{ width: "100%", backgroundColor: "white" }}>
               <form className="mt-3" onSubmit={handleSubmit(onSubmit)}>
                 <div className="mb-3" style={{ display: "flex", marginBottom: "10px" }}>
                 </div>
@@ -136,7 +136,7 @@ function Login() {
                 </div>
                 <div style={{ marginBottom: "10px", display: "flex", justifyContent: "space-between", gap: "10px" }}>
                   <Button className='button2' variant="contained" style={{ flex: 1, height: "50px" }} onClick={handleCancel} >
-                    CANCEL
+                    CLEAR
                   </Button>
                   <Button className='button1' type="submit" style={{ flex: 1, height: "50px" }} variant="contained">
                     Login

@@ -89,7 +89,7 @@ exports.loginController = async (req, res) => {
     }
     const existingUser = await User.findOne({ email, password });
     if (existingUser) {
-      //jwt token generation can be added here
+      //jwt token generation
       const token = jwt.sign({userId:existingUser._id},'supersecretkey');
 
       return res.status(200).json({ 

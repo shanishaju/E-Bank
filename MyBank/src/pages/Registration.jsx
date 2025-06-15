@@ -25,7 +25,7 @@ function Registration() {
             const result = await registerApi(data);
             if (result.status === 200) {
                 alert(result.data.message);
-                reset(); // Reset all form fields
+                reset(); 
                 navigate('/login')
                  
             } else {
@@ -85,8 +85,8 @@ function Registration() {
 
 
                 }}>
-                    <h1 className="text-center text-3xl text-gray-500 font-bold" style={{marginTop:"20px"}}>
-                        Registration Form
+                    <h1 className="text-center text-3xl text-gray-500 " style={{marginTop:"20px"}}>
+                        Register
                     </h1>
 
                     <div className="bg-light p-4 rounded" style={{ width: "100%", backgroundColor: "white" }}>
@@ -194,7 +194,7 @@ function Registration() {
                                         //regex
                                         pattern: {
                                             value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@@#$%^&*()_+])[A-Za-z\d@#$%^&*() _+]{8,}$/,
-                                            message: "Password should include at least one uppercase and lowercase letter, one numeric value and one special character "
+                                            message: "Password should include at least one uppercase letter, one lowercase letter, one number, and one special character "
                                         }
 
 
@@ -206,7 +206,7 @@ function Registration() {
                             </div>
                             <div style={{ marginBottom: "10px", display: "flex", justifyContent: "space-between", gap: "10px" }}>
                                 <Button className='button2' variant="contained" style={{ flex: 1, height: "50px" }} onClick={handleCancel}>
-                                    CANCEL
+                                    CLEAR
                                 </Button>
                                 <Button className='button1' type="submit" style={{ flex: 1, height: "50px" }} variant="contained" disabled={isSubmitting}>
                                     {isSubmitting ? 'Loading...' : 'Submit'}

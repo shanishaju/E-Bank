@@ -4,7 +4,7 @@ const verifyToken = (req, res, next) =>{
 
     const authHeader = req.headers.authorization;
 
-    //checking if token is present
+    //checking token is present or not
 
     if(!authHeader){
         return res.status(401).json({message:"Access denied. No token provided."})
