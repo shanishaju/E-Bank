@@ -10,3 +10,6 @@ export const registerApi = async(reqBody)=>{
 export const loginApi = async(reqBody)=>{
   return await commonApi('POST',`${serverUrl}/login`,reqBody,"")
 }
+export const GetBalanceApi = async () => {
+  return await commonApi('GET', `${serverUrl}/balance`, "", ""); 
+};
