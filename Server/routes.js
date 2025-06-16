@@ -12,11 +12,10 @@ const router = new express.Router()
 router.post('/register',userController.registerController)
 //login
 router.post('/login',userController.loginController)
- 
-
 //test
 router.get('/account-details',verifyToken,userController.getAccountDetails);
-
+//balance
+router.get('/balance',verifyToken,userController.getBalanceController)
 
 
 
