@@ -4,6 +4,7 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { Button, Select, TextField } from '@mui/material';
+import BalanceCard from '../components/BalanceCard';
 
 // Define a11yProps function
 function a11yProps(index) {
@@ -41,11 +42,7 @@ function Employee() {
     return (
         <>
         
-        <div className='balance-card bg-light p-4 rounded shadow mb-4' style={{ width: '500px', margin: '0 auto' }}>
-            <h5 className='text-muted'>Available Balance</h5>
-            <h2 style={{ color: '#1976d2', fontWeight: 'bold' }}>₹ 12,500.75</h2>
-            <p className='text-secondary'>Last updated: 15 June 2025</p>
-        </div>
+           <BalanceCard/>
         
             <div className='maindiv'>
                 
