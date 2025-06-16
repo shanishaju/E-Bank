@@ -14,9 +14,10 @@ import { Link, useNavigate } from 'react-router-dom';
 
 function Registration() {
     const navigate =useNavigate()
-    const { register, handleSubmit, control, formState: { errors, isSubmitting }, reset } = useForm({
+    const { register, handleSubmit, control, formState: { errors, isSubmitting }, reset, watch  } = useForm({
         mode: "onChange"
     });
+     const password = watch('password')
 
     const onSubmit = async (data) => {
         // console.log(data);
@@ -204,6 +205,26 @@ function Registration() {
                                     helperText={errors.password?.message}
                                 />
                             </div>
+                            <div className="mb-3" style={{ marginBottom: "10px" }}>
+                                <TextField
+                                    label="Confirm Password"
+                                    variant="outlined"
+                                    type='password'
+                                    fullWidth
+                                    {...register('confirmpassword', {
+                                        required: "Password is required",
+                                        validate:(value)=>
+                                            value === password || 'Passwords do not match'
+                                       
+
+
+
+                                    })}
+                                    error={!!errors.confirmpassword}
+                                    helperText={errors.confirmpassword?.message}
+                                />
+                            </div>
+
                             <div style={{ marginBottom: "10px", display: "flex", justifyContent: "space-between", gap: "10px" }}>
                                 <Button className='button2' variant="contained" style={{ flex: 1, height: "50px" }} onClick={handleCancel}>
                                     CLEAR
