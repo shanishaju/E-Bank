@@ -122,13 +122,10 @@ function Login() {
                     {...register('password', {
                       required: "Password is required",
                       //regex
-                      pattern: {
-                        value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&*()_+])[A-Za-z\d@#$%^&*()_+]{8,}$/,
-                        message: "Password should include at least one uppercase letter, one lowercase letter, one number, and one special character "
-                      }
-
-
-
+                      // pattern: {
+                      //   value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&*()_+])[A-Za-z\d@#$%^&*()_+]{8,}$/,
+                      //   message: "Password should include at least one uppercase letter, one lowercase letter, one number, and one special character "
+                      // }
                     })}
                     error={!!errors.password}
                     helperText={errors.password?.message}
