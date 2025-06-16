@@ -11,6 +11,8 @@ import { useForm, Controller } from 'react-hook-form';
 import { registerApi } from '../services/allApi';
 import image from '../assets/revenue-growth.gif'
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'sonner'
+
 
 function Registration() {
     const navigate =useNavigate()
@@ -25,15 +27,15 @@ function Registration() {
         try {
             const result = await registerApi(data);
             if (result.status === 200) {
-                alert(result.data.message);
+                toast.success(result.data.message);
                 reset(); 
                 navigate('/login')
                  
             } else {
-                alert(`Error: ${result.response.data.message}`);
+                toast.error(`Error: ${result.response.data.message}`);
             }
         } catch (error) {
-            alert(error.message);
+           toast.error(error.message);
         }
 
 

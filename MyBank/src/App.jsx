@@ -5,6 +5,7 @@ import Registration from './pages/Registration'
 import Home from './pages/Home'
 import AboutUs from './pages/AboutUs'
 import Login from './pages/Login'
+import { Toaster } from 'sonner'
 
 function App() {
   return (
@@ -18,6 +19,8 @@ function App() {
 
       </Routes>
 
+      <Toaster richColors position="top-center" />
+ 
     </>
   )
 }

@@ -17,7 +17,7 @@ function Login() {
     try {
       const result = await loginApi(data);
       if (result.status === 200) {
-        alert(result.data.message)
+        toast.success(result.data.message)
         //token storing to session storage
         sessionStorage.setItem("existinguser",JSON.stringify(result.data.user))
         sessionStorage.setItem("token",result.data.token)
@@ -32,12 +32,12 @@ function Login() {
          },1000)
 
       } else {
-        alert(`Error: ${result.response.data.message}`)
+        toast.error(`Error: ${result.response.data.message}`)
       }
 
     }
     catch (error) {
-      alert(error.message)
+      toast.error(error.message)
 
     }
   }

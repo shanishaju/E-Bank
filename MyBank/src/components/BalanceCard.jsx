@@ -36,11 +36,11 @@ function BalanceCard() {
                 }
 
             } else {
-                alert("Failed to fetch balance. Please try again later.");
+                toast.error("Failed to fetch balance. Please try again later.");
             }
 
         } catch (error) {
-            alert('Cannot refresh the balance at this moment');
+            toast.error('Cannot refresh the balance at this moment');
         }
         setTimeout(() => setRotating(false), 500);
     };
