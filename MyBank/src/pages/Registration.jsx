@@ -1,7 +1,8 @@
-import { Button, TextField, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import { FormControl, FormHelperText, FormLabel } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -12,14 +13,15 @@ import { registerApi } from '../services/allApi';
 import image from '../assets/revenue-growth.gif'
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner'
+import TextBox from '../components/FormElements/TextBox';
 
 
 function Registration() {
-    const navigate =useNavigate()
-    const { register, handleSubmit, control, formState: { errors, isSubmitting }, reset, watch  } = useForm({
+    const navigate = useNavigate()
+    const { register, handleSubmit, control, formState: { errors, isSubmitting }, reset, watch } = useForm({
         mode: "onChange"
     });
-     const password = watch('password')
+    const password = watch('password')
 
     const onSubmit = async (data) => {
         // console.log(data);
@@ -28,14 +30,14 @@ function Registration() {
             const result = await registerApi(data);
             if (result.status === 200) {
                 toast.success(result.data.message);
-                reset(); 
+                reset();
                 navigate('/login')
-                 
+
             } else {
                 toast.error(`Error: ${result.response.data.message}`);
             }
         } catch (error) {
-           toast.error(error.message);
+            toast.error(error.message);
         }
 
 
@@ -76,6 +78,7 @@ function Registration() {
                         View More
                     </button>
 
+
                     {/* <img
                         src="https://img.freepik.com/free-vector/global-stock-market-concept-illustration_114360-19030.jpg?t=st=1738483788~exp=1738487388~hmac=6c6f2a614cc4d4e13f3295c0fc20c42ac2f0294d4a88fde5071752092625783e&w=740"
                         alt="Registration"
@@ -88,7 +91,7 @@ function Registration() {
 
 
                 }}>
-                    <h1 className="text-center text-3xl text-gray-500 " style={{marginTop:"20px"}}>
+                    <h1 className="text-center text-4xl text-gray-500 " style={{ marginTop: "20px" }}>
                         Register
                     </h1>
 
@@ -96,20 +99,16 @@ function Registration() {
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <div className="mb-3" style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
                                 <div style={{ flex: 1 }}>
-                                    <TextField
+                                    <TextBox
                                         label="First Name"
-                                        variant="outlined"
-                                        fullWidth
                                         {...register('fname', { required: "First Name is required" })}
                                         error={!!errors.fname}
                                         helperText={errors.fname?.message}
                                     />
                                 </div>
                                 <div style={{ flex: 1 }}>
-                                    <TextField
+                                    <TextBox
                                         label="Last Name"
-                                        variant="outlined"
-                                        fullWidth
                                         {...register('lname', { required: "Last Name is required" })}
                                         error={!!errors.lname}
                                         helperText={errors.lname?.message}
@@ -142,24 +141,27 @@ function Registration() {
                                     </LocalizationProvider>
                                 </div>
                                 <div>
-                                    <Controller
-                                        name="gender"
-                                        control={control}
-                                        rules={{ required: "Gender is required" }}
-                                        render={({ field }) => (
-                                            <RadioGroup row {...field}>
-                                                <FormControlLabel value="male" control={<Radio />} label="Male" />
-                                                <FormControlLabel value="female" control={<Radio />} label="Female" />
-                                            </RadioGroup>
+                                    <FormControl component="fieldset" error={!!errors.gender}>
+                                        <Controller
+                                            name="gender"
+                                            control={control}
+                                            rules={{ required: "Gender is required" }}
+                                            render={({ field }) => (
+                                                <RadioGroup row {...field}>
+                                                    <FormControlLabel value="male" control={<Radio />} label="Male" />
+                                                    <FormControlLabel value="female" control={<Radio />} label="Female" />
+                                                </RadioGroup>
+                                            )}
+                                        />
+                                        {errors.gender && (
+                                            <FormHelperText>{errors.gender.message}</FormHelperText>
                                         )}
-                                    />
+                                    </FormControl>
                                 </div>
                             </div>
                             <div className="mb-3" style={{ marginBottom: "10px" }}>
-                                <TextField
+                                <TextBox
                                     label="Email"
-                                    variant="outlined"
-                                    fullWidth
                                     {...register('email', {
                                         required: "Email is required",
                                         pattern: {
@@ -167,17 +169,14 @@ function Registration() {
                                             message: "Enter a valid email address"
                                         }
                                     })}
-
                                     error={!!errors.email}
                                     helperText={errors.email?.message}
                                 />
                             </div>
 
                             <div className="mb-3" style={{ marginBottom: "10px" }}>
-                                <TextField
+                                <TextBox
                                     label="Phone Number"
-                                    variant="outlined"
-                                    fullWidth
                                     {...register('phonenum', {
                                         required: "Phone Number is required",
                                         pattern: { value: /^\d{10}$/, message: "Enter a valid 10-digit phone number" }
@@ -187,11 +186,9 @@ function Registration() {
                                 />
                             </div>
                             <div className="mb-3" style={{ marginBottom: "10px" }}>
-                                <TextField
+                                <TextBox
                                     label="Password"
-                                    variant="outlined"
                                     type='password'
-                                    fullWidth
                                     {...register('password', {
                                         required: "Password is required",
                                         //regex
@@ -199,28 +196,19 @@ function Registration() {
                                             value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@@#$%^&*()_+])[A-Za-z\d@#$%^&*() _+]{8,}$/,
                                             message: "Password should include at least one uppercase letter, one lowercase letter, one number, and one special character "
                                         }
-
-
-
                                     })}
                                     error={!!errors.password}
                                     helperText={errors.password?.message}
                                 />
                             </div>
                             <div className="mb-3" style={{ marginBottom: "10px" }}>
-                                <TextField
+                                <TextBox
                                     label="Confirm Password"
-                                    variant="outlined"
                                     type='password'
-                                    fullWidth
                                     {...register('confirmpassword', {
                                         required: "Password is required",
-                                        validate:(value)=>
+                                        validate: (value) =>
                                             value === password || 'Passwords do not match'
-                                       
-
-
-
                                     })}
                                     error={!!errors.confirmpassword}
                                     helperText={errors.confirmpassword?.message}
@@ -236,7 +224,7 @@ function Registration() {
                                 </Button>
                             </div>
 
-                            <p className='mt-5' style={{color:"grey"}}>Already have an account, Click here to <Link to={'/login'}> <span style={{color:'orange'}}>Login</span> </Link></p>
+                            <p className='mt-5' style={{ color: "grey" }}>Already have an account, Click here to <Link to={'/login'}> <span style={{ color: 'orange' }}>Login</span> </Link></p>
                         </form>
 
                     </div>

@@ -5,6 +5,8 @@ import { Button, TextField } from '@mui/material'
 import { loginApi } from '../services/allApi';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'sonner'
+
 
 
 function Login() {
@@ -17,16 +19,13 @@ function Login() {
     try {
       const result = await loginApi(data);
       if (result.status === 200) {
-        toast.success(result.data.message)
+        // toast.success(result.data.message)
         //token storing to session storage
         sessionStorage.setItem("existinguser",JSON.stringify(result.data.user))
         sessionStorage.setItem("token",result.data.token)
-        console.log("user",result.data.user);
-        console.log('token',result.data.token);
-        
-   
+        // console.log("user",result.data.user);
+        // console.log('token',result.data.token);
         reset()
-       
         setTimeout(()=>{
           navigate('/account')
          },1000)
@@ -48,7 +47,7 @@ function Login() {
 
   return (
     <>
-      <div className="container mainclass mt-5" style={{ paddingTop: "100px", height: "100vh" }}>
+      <div className="container mainclass " style={{ paddingTop: "100px", height: "100vh" }}>
         <div className="row maindiv" style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div className="col-md-2"></div>
           <div className="col-md-8"

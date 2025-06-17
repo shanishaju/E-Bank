@@ -1,9 +1,9 @@
+
+
 @import "tailwindcss";
 
 *
 {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
 }
 /* body{
@@ -23,6 +23,9 @@
 .button2{
     background-color: #ed790cb8 !important;
 
+}
+button{
+    cursor: pointer;
 }
 form{
     padding-top: 30px;
