@@ -16,7 +16,8 @@ router.post('/login',userController.loginController)
 router.get('/account-details',verifyToken,userController.getAccountDetails);
 //balance
 router.get('/balance',verifyToken,userController.getBalanceController)
-
+//getAccountDetails
+router.get('/userdetails',verifyToken,userController.getAccountDetails)
 
 
 

@@ -109,17 +109,17 @@ exports.loginController = async (req, res) => {
   }
 };
 
-//test api
+//user details api
 exports.getAccountDetails = async (req, res) => {
   try {
     const userId = req.user.userId; // from decoded token
-    const user = await User.findById(userId).select("firstname lastname email phone accountnum balance");
+    const userDetails = await User.findById(userId).select("firstname lastname email phone dob gender");
 
-    if (!user) {
+    if (!userDetails) {
       return res.status(404).json({ message: "User not found." });
     }
 
-    return res.status(200).json({ user });
+    return res.status(200).json({ userDetails });
   } catch (error) {
     return res.status(500).json({ message: `Failed to fetch account details: ${error.message}` });
   }
