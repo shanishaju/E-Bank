@@ -15,3 +15,6 @@ export const GetBalanceApi = async () => {
 export const GetMyProfileApi = async()=>{
   return await commonApi('GET', `${serverUrl}/userdetails`, "", ""); 
 }
+export const UpdateProfileApi = async (reqBody)=>{
+  return await commonApi('PUT',`${serverUrl}/updateprofile`, reqBody, "");
+}

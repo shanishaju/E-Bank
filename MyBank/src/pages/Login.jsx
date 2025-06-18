@@ -12,7 +12,7 @@ import TextBox from '../components/FormElements/TextBox';
 function Login() {
   const navigate = useNavigate()
 
-  const { register, handleSubmit, formState: { errors }, reset } = useForm({
+  const { register, handleSubmit, formState: { errors, isSubmitting}, reset } = useForm({
     mode: "onChange"
   });
   const onSubmit = async (data) => {
@@ -131,8 +131,8 @@ function Login() {
                   <Button className='button2' variant="contained" style={{ flex: 1, height: "50px" }} onClick={handleCancel} >
                     CLEAR
                   </Button>
-                  <Button className='button1' type="submit" style={{ flex: 1, height: "50px" }} variant="contained">
-                    Login
+                  <Button className='button1' type="submit" style={{ flex: 1, height: "50px" }} variant="contained" disabled={isSubmitting}>
+                    {isSubmitting ? 'Loading...' : 'Login'}
                   </Button>
                 </div>
                 <p className='mt-5' style={{ color: "grey" }}>New user? Click here to  <Link to={'/register'}> <span style={{ color: 'orange' }}>Register</span> </Link></p>
