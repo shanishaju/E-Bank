@@ -97,7 +97,7 @@ function Registration() {
 
                     <div className="bg-light p-4 rounded" style={{ width: "100%", backgroundColor: "white" }}>
                         <form onSubmit={handleSubmit(onSubmit)}>
-                            <div className="mb-3" style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
+                            <div className="" style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
                                 <div style={{ flex: 1 }}>
                                     <TextBox
                                         label="First Name"
@@ -116,32 +116,34 @@ function Registration() {
                                 </div>
                             </div>
 
-                            <div className="mb-3" style={{ display: "flex", marginBottom: "10px" }}>
-                                <div style={{ marginRight: "50px" }}>
+                            <div style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
+                                <div style={{ flex: 1 }}>
                                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                                         <Controller
                                             name="dateOfBirth"
                                             control={control}
                                             rules={{
                                                 required: "Date of Birth is required",
-                                                // validate: value => {
-                                                //   const dateOfBirth = dayjs().diff(dayjs(value), 'year');
-                                                //   return dateOfBirth >= 18 || "You must be 18+ to register";
-                                                // }
                                             }}
                                             render={({ field }) => (
                                                 <DatePicker
                                                     label="DoB"
                                                     value={field.value ? dayjs(field.value) : null}
                                                     onChange={(newValue) => field.onChange(newValue ? newValue.format("YYYY-MM-DD") : "")}
-                                                    slotProps={{ textField: { error: !!errors.dateOfBirth, helperText: errors.dateOfBirth?.message } }}
+                                                    slotProps={{
+                                                        textField: {
+                                                            fullWidth: true,
+                                                            error: !!errors.dateOfBirth,
+                                                            helperText: errors.dateOfBirth?.message
+                                                        }
+                                                    }}
                                                 />
                                             )}
                                         />
                                     </LocalizationProvider>
                                 </div>
-                                <div>
-                                    <FormControl component="fieldset" error={!!errors.gender}>
+                                <div style={{ flex: 1 }}>
+                                    <FormControl component="fieldset" error={!!errors.gender} fullWidth>
                                         <Controller
                                             name="gender"
                                             control={control}
@@ -159,6 +161,7 @@ function Registration() {
                                     </FormControl>
                                 </div>
                             </div>
+
                             <div className="mb-3" style={{ marginBottom: "10px" }}>
                                 <TextBox
                                     label="Email"

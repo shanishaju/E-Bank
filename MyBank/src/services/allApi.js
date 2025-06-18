@@ -12,3 +12,6 @@ export const loginApi = async(reqBody)=>{
 export const GetBalanceApi = async () => {
   return await commonApi('GET', `${serverUrl}/balance`, "", ""); 
 };
+export const GetMyProfileApi = async()=>{
+  return await commonApi('GET', `${serverUrl}/userdetails`, "", ""); 
+}

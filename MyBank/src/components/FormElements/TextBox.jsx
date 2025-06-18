@@ -6,7 +6,15 @@ const TextBox = React.forwardRef((props, ref) => {
         <TextField
             variant="outlined"
             fullWidth
-            inputRef={ref} 
+            inputRef={ref}
+            sx={{
+                '& .MuiOutlinedInput-root': {
+
+                    '&.Mui-focused fieldset': {
+                        borderColor: 'green',
+                    },
+                },
+            }}
             {...props}
         />
     );

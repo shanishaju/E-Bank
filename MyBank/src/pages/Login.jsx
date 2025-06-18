@@ -6,7 +6,7 @@ import { loginApi } from '../services/allApi';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner'
-
+import TextBox from '../components/FormElements/TextBox';
 
 
 function Login() {
@@ -21,14 +21,14 @@ function Login() {
       if (result.status === 200) {
         // toast.success(result.data.message)
         //token storing to session storage
-        sessionStorage.setItem("existinguser",JSON.stringify(result.data.user))
-        sessionStorage.setItem("token",result.data.token)
+        sessionStorage.setItem("existinguser", JSON.stringify(result.data.user))
+        sessionStorage.setItem("token", result.data.token)
         // console.log("user",result.data.user);
         // console.log('token',result.data.token);
         reset()
-        setTimeout(()=>{
+        setTimeout(() => {
           navigate('/account')
-         },1000)
+        }, 1000)
 
       } else {
         toast.error(`Error: ${result.response.data.message}`)
@@ -86,7 +86,7 @@ function Login() {
 
           }}>
             <h1 className="text-center text-3xl text-gray-500" style={{ color: "grey", marginTop: "50px" }}>
-              Login 
+              Login
             </h1>
 
             <div className="bg-light formbox p-4 rounded" style={{ width: "100%", backgroundColor: "white" }}>
@@ -94,10 +94,9 @@ function Login() {
                 <div className="mb-3" style={{ display: "flex", marginBottom: "10px" }}>
                 </div>
                 <div className="mb-3" style={{ marginBottom: "10px" }}>
-                  <TextField
+                  <TextBox
                     label="Email"
-                    variant="outlined"
-                    fullWidth
+
                     {...register('email', {
                       required: "Email is required",
                       pattern: {
@@ -112,11 +111,9 @@ function Login() {
                   />
                 </div>
                 <div className="mb-3" style={{ marginBottom: "10px" }}>
-                  <TextField
+                  <TextBox
                     label="Password"
-                    variant="outlined"
                     type='password'
-                    fullWidth
 
                     {...register('password', {
                       required: "Password is required",

@@ -11,7 +11,7 @@ function BalanceCard() {
     const parseData = JSON.parse(userData);
     const balance = parseData.balance
     console.log("balance", balance);
-    
+
 
     const toggleBalanceVisibility = () => {
         setShowBalance(prev => !prev);
@@ -46,7 +46,7 @@ function BalanceCard() {
 
 
     return (
-        <div className='flex flex-col items-center justify-center gap-2 p-4'>
+        <div className='flex flex-col items-center justify-center gap-2 p-4 shadow-lg rounded-4xl w-[400px]  '>
             <h3 className='text-green-800 text-3xl'>PRO Account</h3>
             <h3 className='text-gray-500'>By Cashvani Bank</h3>
             <h3 className='text-gray-800 text-xl'>Account Balance</h3>
