@@ -113,7 +113,7 @@ exports.loginController = async (req, res) => {
 exports.getAccountDetails = async (req, res) => {
   try {
     const userId = req.user.userId; // from decoded token
-    const userDetails = await User.findById(userId).select("firstname lastname email phone dob gender");
+    const userDetails = await User.findById(userId).select("firstname lastname email phone dob gender address");
 
     if (!userDetails) {
       return res.status(404).json({ message: "User not found." });
@@ -138,6 +138,33 @@ exports.getBalanceController = async (req, res)=>{
   } catch (error) {
     return res.status(500).json({ message: `Failed to fetch balance: ${error.message}` });
   }
-}
+};
+
+//update profile
+
+exports.updateProfileController = async (req, res) => {
+  try {
+    const userId = req.user.userId; 
+    const { firstname, lastname, email, phone, address } = req.body;
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { firstname, lastname, email, phone, address },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    return res.status(200).json({
+      message: "Profile updated successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({ message: `Profile update failed: ${error.message}` });
+  }
+};
+
+
 
 

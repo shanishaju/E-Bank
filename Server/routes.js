@@ -18,7 +18,8 @@ router.get('/account-details',verifyToken,userController.getAccountDetails);
 router.get('/balance',verifyToken,userController.getBalanceController)
 //getAccountDetails
 router.get('/userdetails',verifyToken,userController.getAccountDetails)
-
+//updateprofile
+router.put('/updateprofile',verifyToken,userController.updateProfileController)
 
 
 //3export the router
