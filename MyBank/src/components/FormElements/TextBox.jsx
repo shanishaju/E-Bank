@@ -1,15 +1,16 @@
 import { TextField } from '@mui/material'
 import React from 'react'
 
-function TextBox(props) {
+const TextBox = React.forwardRef((props, ref) => {
     return (
         <TextField
             variant="outlined"
             fullWidth
+            inputRef={ref} 
             {...props}
-        >
-        </TextField>
-    )
-}
+        />
+    );
+});
+
 
 export default TextBox
