@@ -32,11 +32,11 @@ const calculateAge = (dob) => {
 
 // Register function
 exports.registerController = async (req, res) => {
-  const { fname, lname, gender, dateOfBirth, email, phonenum, password } =
+  const { fname, lname, gender, dateOfBirth, email, phonenum, password,accountCategory,accountCurrency,accountPurpose,country,province,district,street,houseNo,wardNo,pincode } =
     req.body;
 
   try {
-    if (!fname || !lname || !gender || !dateOfBirth || !email || !phonenum || !password) {
+    if (!fname || !lname || !gender || !dateOfBirth || !email || !phonenum || !password || !accountCategory || !accountCurrency || !accountPurpose || !country || !province || !district || !street || !houseNo || !wardNo || !pincode ) {
       return res.status(400).json({ message: "All fields are required!" });
     }
 
@@ -70,7 +70,20 @@ exports.registerController = async (req, res) => {
       email,
       phone: phonenum,
       password,
-      balance: 0
+      balance: 0,
+      kycStatus: "pending",
+      accountCategory,
+      accountCurrency,
+      accountPurpose,
+      country,
+      province,
+      district,
+      street,
+      houseNo,
+      wardNo,
+      pincode 
+
+
     });
 
     await newUser.save();
