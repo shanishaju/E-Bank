@@ -1,18 +1,26 @@
-import { Button, Typography } from '@mui/material';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import { FormControl, FormHelperText, FormLabel } from '@mui/material';
+import React from 'react';
+import {
+    Grid,
+    TextField,
+    MenuItem,
+    Button,
+    Typography,
+    Box,
+    Switch,
+    Radio,
+    RadioGroup,
+    FormControl,
+    FormControlLabel,
+    FormHelperText,
+} from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import React from 'react';
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
 import { useForm, Controller } from 'react-hook-form';
 import { registerApi } from '../services/allApi';
-import image from '../assets/revenue-growth.gif'
 import { Link, useNavigate } from 'react-router-dom';
-import { toast } from 'sonner'
+import { toast } from 'sonner';
 import TextBox from '../components/FormElements/TextBox';
 
 
@@ -47,196 +55,364 @@ function Registration() {
     };
 
     return (
-        <div className="container mainclass" style={{ paddingTop: "40px", height: "100vh" }}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <Box sx={{ p: 4, backgroundColor: '#fff' }}>
+                <Grid container spacing={4} alignItems="center">
+                    {/* Sidebar */}
+                    <Grid item xs={12} md={3}>
+                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }} className="bg-gray-100 p-6">
+                            <Typography variant="h6" color="goldenrod" fontWeight="bold">
+                                Account Opening Form
+                            </Typography>
+                            {['Basic Details', 'Permanent Address'].map((label, i) => (
+                                <Button
+                                    key={i}
+                                    variant="outlined"
+                                    fullWidth
+                                    sx={{
+                                        backgroundColor: 'goldenrod',
+                                        color: 'white',
+                                        borderColor: 'goldenrod',
+                                        '&:hover': {
+                                            backgroundColor: '#daa520',
+                                        },
+                                    }}
+                                >
+                                    {label}
+                                </Button>
+                            ))}
+                        </Box>
+                    </Grid>
 
-            <div className="row maindiv2" style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <div className="col-md-2"></div>
-                <div className="col-md-8"
-                    style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        color: "white",
-                        fontSize: "20px",
-                    }}>
-                    <img src={image} alt="" width="50%" />
-                    <h2>Your Bank</h2>
-                    <p>Your perfect bank partner Your perfect bank partner</p>
-                    <button style={{
-                        backgroundColor: "white", // Primary color
-                        marginTop: "20px",
-                        color: "#ff8500",
-                        border: "none",
-                        padding: "12px 24px",
-                        fontSize: "16px",
-                        borderRadius: "8px",
-                        cursor: "pointer",
-                    }
-                    }
-                    >
-                        View More
-                    </button>
+                    {/* Main Form */}
+                    <Grid item xs={12} md={9}>
+                        {/* Basic Details */}
+                        <Typography variant="h6" color="goldenrod" fontWeight="bold" gutterBottom>
+                            Basic Details
+                        </Typography>
 
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} md={6}>
+                                <TextBox
+                                    label="First Name"
+                                    {...register('fname', { required: 'First Name is required' })}
+                                    error={!!errors.fname}
+                                    helperText={errors.fname?.message}
+                                />
+                            </Grid>
+                            <Grid item xs={12} md={6}>
+                                <TextBox
+                                    label="Last Name"
+                                    {...register('lname', { required: 'Last Name is required' })}
+                                    error={!!errors.lname}
+                                    helperText={errors.lname?.message}
+                                />
+                            </Grid>
 
-                    {/* <img
-                        src="https://img.freepik.com/free-vector/global-stock-market-concept-illustration_114360-19030.jpg?t=st=1738483788~exp=1738487388~hmac=6c6f2a614cc4d4e13f3295c0fc20c42ac2f0294d4a88fde5071752092625783e&w=740"
-                        alt="Registration"
-                        className='imgdiv'
-                    /> */}
-                </div>
+                            <Grid item xs={12} md={4}>
+                                <TextBox
+                                    label="Account Category"
+                                    select
+                                    defaultValue=""
+                                    {...register('accountCategory', { required: 'Account Category is required' })}
+                                    error={!!errors.accountCategory}
+                                    helperText={errors.accountCategory?.message}
+                                >
+                                    <MenuItem value="Saving">Saving</MenuItem>
+                                    <MenuItem value="Current">Current</MenuItem>
+                                </TextBox>
+                            </Grid>
 
-                <div className="col-md-4" style={{
-                    width: "50%", backgroundColor: "white", borderRadius: "100px 0px 0px 100px", overflow: 'hidden', borderLeft: "6px dotted #284c7e"
+                            <Grid item xs={12} md={4}>
+                                <TextBox
+                                    label="Account Currency"
+                                    select
+                                    defaultValue=""
+                                    {...register('accountCurrency', { required: 'Account Currency is required' })}
+                                    error={!!errors.accountCurrency}
+                                    helperText={errors.accountCurrency?.message}
+                                >
+                                    <MenuItem value="INR">INR</MenuItem>
+                                    <MenuItem value="USD">USD</MenuItem>
+                                </TextBox>
+                            </Grid>
 
+                            <Grid item xs={12} md={4}>
+                                <TextBox
+                                    label="Purpose of A/C"
+                                    select
+                                    defaultValue=""
+                                    {...register('accountPurpose', { required: 'Purpose is required' })}
+                                    error={!!errors.accountPurpose}
+                                    helperText={errors.accountPurpose?.message}
+                                >
+                                    <MenuItem value="Personal">Personal</MenuItem>
+                                    <MenuItem value="Business">Business</MenuItem>
+                                </TextBox>
+                            </Grid>
 
-                }}>
-                    <h1 className="text-center text-4xl text-gray-500 " style={{ marginTop: "20px" }}>
-                        Register
-                    </h1>
-
-                    <div className="bg-light p-4 rounded" style={{ width: "100%", backgroundColor: "white" }}>
-                        <form onSubmit={handleSubmit(onSubmit)}>
-                            <div className="" style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
-                                <div style={{ flex: 1 }}>
-                                    <TextBox
-                                        label="First Name"
-                                        {...register('fname', { required: "First Name is required" })}
-                                        error={!!errors.fname}
-                                        helperText={errors.fname?.message}
-                                    />
-                                </div>
-                                <div style={{ flex: 1 }}>
-                                    <TextBox
-                                        label="Last Name"
-                                        {...register('lname', { required: "Last Name is required" })}
-                                        error={!!errors.lname}
-                                        helperText={errors.lname?.message}
-                                    />
-                                </div>
-                            </div>
-
-                            <div style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
-                                <div style={{ flex: 1 }}>
-                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                        <Controller
-                                            name="dateOfBirth"
-                                            control={control}
-                                            rules={{
-                                                required: "Date of Birth is required",
-                                            }}
-                                            render={({ field }) => (
-                                                <DatePicker
-                                                    label="DoB"
-                                                    value={field.value ? dayjs(field.value) : null}
-                                                    onChange={(newValue) => field.onChange(newValue ? newValue.format("YYYY-MM-DD") : "")}
-                                                    slotProps={{
-                                                        textField: {
-                                                            fullWidth: true,
-                                                            error: !!errors.dateOfBirth,
-                                                            helperText: errors.dateOfBirth?.message
-                                                        }
-                                                    }}
-                                                />
-                                            )}
-                                        />
-                                    </LocalizationProvider>
-                                </div>
-                                <div style={{ flex: 1 }}>
-                                    <FormControl component="fieldset" error={!!errors.gender} fullWidth>
-                                        <Controller
-                                            name="gender"
-                                            control={control}
-                                            rules={{ required: "Gender is required" }}
-                                            render={({ field }) => (
-                                                <RadioGroup row {...field}>
-                                                    <FormControlLabel value="male" control={<Radio />} label="Male" />
-                                                    <FormControlLabel value="female" control={<Radio />} label="Female" />
-                                                </RadioGroup>
-                                            )}
-                                        />
-                                        {errors.gender && (
-                                            <FormHelperText>{errors.gender.message}</FormHelperText>
-                                        )}
-                                    </FormControl>
-                                </div>
-                            </div>
-
-                            <div className="mb-3" style={{ marginBottom: "10px" }}>
+                            <Grid item xs={12} md={6}>
                                 <TextBox
                                     label="Email"
                                     {...register('email', {
-                                        required: "Email is required",
+                                        required: 'Email is required',
                                         pattern: {
-                                            value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                                            message: "Enter a valid email address"
-                                        }
+                                            value: /^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/,
+                                            message: 'Enter a valid email address',
+                                        },
                                     })}
                                     error={!!errors.email}
                                     helperText={errors.email?.message}
                                 />
-                            </div>
+                            </Grid>
 
-                            <div className="mb-3" style={{ marginBottom: "10px" }}>
+                            <Grid item xs={12} md={6}>
                                 <TextBox
                                     label="Phone Number"
                                     {...register('phonenum', {
-                                        required: "Phone Number is required",
-                                        pattern: { value: /^\d{10}$/, message: "Enter a valid 10-digit phone number" }
+                                        required: 'Phone number is required',
+                                        pattern: {
+                                            value: /^\d{10}$/,
+                                            message: 'Enter a valid 10-digit phone number',
+                                        },
                                     })}
                                     error={!!errors.phonenum}
                                     helperText={errors.phonenum?.message}
                                 />
-                            </div>
-                            <div className="mb-3" style={{ marginBottom: "10px" }}>
+                            </Grid>
+
+                            <Grid item xs={12} md={6}>
+                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                    <Controller
+                                        name="dateOfBirth"
+                                        control={control}
+                                        rules={{ required: 'Date of Birth is required' }}
+                                        render={({ field }) => (
+                                            <DatePicker
+                                                label="DoB"
+                                                value={field.value ? dayjs(field.value) : null}
+                                                onChange={(newValue) =>
+                                                    field.onChange(newValue ? newValue.format('YYYY-MM-DD') : '')
+                                                }
+                                                slotProps={{
+                                                    textField: {
+                                                        fullWidth: true,
+                                                        size: 'small',
+                                                        error: !!errors.dateOfBirth,
+                                                        helperText: errors.dateOfBirth?.message,
+                                                    },
+                                                }}
+                                            />
+                                        )}
+                                    />
+                                </LocalizationProvider>
+                            </Grid>
+
+                            <Grid item xs={12} md={6}>
+                                <FormControl component="fieldset" error={!!errors.gender} fullWidth>
+                                    <Controller
+                                        name="gender"
+                                        control={control}
+                                        rules={{ required: 'Gender is required' }}
+                                        render={({ field }) => (
+                                            <RadioGroup row {...field}>
+                                                <FormControlLabel value="male" control={<Radio />} label="Male" />
+                                                <FormControlLabel value="female" control={<Radio />} label="Female" />
+                                            </RadioGroup>
+                                        )}
+                                    />
+                                    {errors.gender && <FormHelperText>{errors.gender.message}</FormHelperText>}
+                                </FormControl>
+                            </Grid>
+                        </Grid>
+
+                        {/* Permanent Address */}
+                        <Typography variant="h6" color="goldenrod" fontWeight="bold" sx={{ mt: 4 }}>
+                            Permanent Address
+                        </Typography>
+                        <Grid container spacing={2}>
+                            {/* Country */}
+                            <Grid item xs={12} md={4}>
+                                <TextBox
+                                    label="Country"
+                                    select
+                                    defaultValue=""
+                                    {...register('country', { required: 'Country is required' })}
+                                    error={!!errors.country}
+                                    helperText={errors.country?.message}
+                                >
+                                    <MenuItem value="India">India</MenuItem>
+                                </TextBox>
+                            </Grid>
+
+                            {/* Province */}
+                            <Grid item xs={12} md={4}>
+                                <TextBox
+                                    label="Province"
+                                    {...register('province', { required: 'Province is required' })}
+                                    error={!!errors.province}
+                                    helperText={errors.province?.message}
+                                />
+                            </Grid>
+
+                            {/* District */}
+                            <Grid item xs={12} md={4}>
+                                <TextBox
+                                    label="District"
+                                    {...register('district', { required: 'District is required' })}
+                                    error={!!errors.district}
+                                    helperText={errors.district?.message}
+                                />
+                            </Grid>
+
+                            {/* Street */}
+                            <Grid item xs={12} md={4}>
+                                <TextBox
+                                    label="Street"
+                                    {...register('street', { required: 'Street is required' })}
+                                    error={!!errors.street}
+                                    helperText={errors.street?.message}
+                                />
+                            </Grid>
+
+                            {/* House No. */}
+                            <Grid item xs={12} md={4}>
+                                <TextBox
+                                    label="House No."
+                                    {...register('houseNo', { required: 'House No. is required' })}
+                                    error={!!errors.houseNo}
+                                    helperText={errors.houseNo?.message}
+                                />
+                            </Grid>
+
+                            {/* Ward No. */}
+                            <Grid item xs={12} md={4}>
+                                <TextBox
+                                    label="Ward No."
+                                    {...register('wardNo', { required: 'Ward No. is required' })}
+                                    error={!!errors.wardNo}
+                                    helperText={errors.wardNo?.message}
+                                />
+                            </Grid>
+
+                            {/* Pincode */}
+                            <Grid item xs={12} md={4}>
+                                <TextBox
+                                    label="Pincode"
+                                    {...register('pincode', { required: 'Pincode is required' })}
+                                    error={!!errors.pincode}
+                                    helperText={errors.pincode?.message}
+                                />
+                            </Grid>
+
+                            {/* Email */}
+                            <Grid item xs={12} md={4}>
+                                <TextBox
+                                    label="Email"
+                                    {...register('permEmail', {
+                                        required: 'Email is required',
+                                        pattern: {
+                                            value: /^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/,
+                                            message: 'Enter a valid email address',
+                                        },
+                                    })}
+                                    error={!!errors.permEmail}
+                                    helperText={errors.permEmail?.message}
+                                />
+                            </Grid>
+
+                            {/* Phone */}
+                            <Grid item xs={12} md={4}>
+                                <TextBox
+                                    label="Phone"
+                                    {...register('permPhone', {
+                                        required: 'Phone is required',
+                                        pattern: {
+                                            value: /^\d{10}$/,
+                                            message: 'Enter a valid 10-digit phone number',
+                                        },
+                                    })}
+                                    error={!!errors.permPhone}
+                                    helperText={errors.permPhone?.message}
+                                />
+                            </Grid>
+                        </Grid>
+
+
+                        {/* Passwords */}
+                        <Grid container spacing={2} sx={{ mt: 2 }}>
+                            <Grid item xs={12} md={6}>
                                 <TextBox
                                     label="Password"
-                                    type='password'
+                                    type="password"
                                     {...register('password', {
-                                        required: "Password is required",
-                                        //regex
+                                        required: 'Password is required',
                                         pattern: {
-                                            value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@@#$%^&*()_+])[A-Za-z\d@#$%^&*() _+]{8,}$/,
-                                            message: "Password should include at least one uppercase letter, one lowercase letter, one number, and one special character "
-                                        }
+                                            value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&*])[A-Za-z\d@#$%^&*]{8,}$/,
+                                            message:
+                                                'Include at least one uppercase, lowercase, digit, and special character',
+                                        },
                                     })}
                                     error={!!errors.password}
                                     helperText={errors.password?.message}
                                 />
-                            </div>
-                            <div className="mb-3" style={{ marginBottom: "10px" }}>
+                            </Grid>
+                            <Grid item xs={12} md={6}>
                                 <TextBox
                                     label="Confirm Password"
-                                    type='password'
+                                    type="password"
                                     {...register('confirmpassword', {
-                                        required: "Password is required",
+                                        required: 'Confirm password is required',
                                         validate: (value) =>
-                                            value === password || 'Passwords do not match'
+                                            value === password || 'Passwords do not match',
                                     })}
                                     error={!!errors.confirmpassword}
                                     helperText={errors.confirmpassword?.message}
                                 />
-                            </div>
+                            </Grid>
+                        </Grid>
 
-                            <div style={{ marginBottom: "10px", display: "flex", justifyContent: "space-between", gap: "10px" }}>
-                                <Button className='button2' variant="contained" style={{ flex: 1, height: "50px" }} onClick={handleCancel}>
-                                    CLEAR
-                                </Button>
-                                <Button className='button1' type="submit" style={{ flex: 1, height: "50px" }} variant="contained" disabled={isSubmitting}>
-                                    {isSubmitting ? 'Loading...' : 'Submit'}
-                                </Button>
-                            </div>
+                        {/* Buttons */}
+                        <Box mt={4} display="flex" gap={2}>
+                            <Button variant="contained" onClick={handleCancel} fullWidth
+                                sx={{
+                                    backgroundColor: 'white',
+                                    color: 'gray',
+                                    '&:hover': {
+                                        backgroundColor: 'gray',
+                                        color: 'white',
+                                    },
+                                }}
+                            >
+                                Clear
+                            </Button>
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                fullWidth
+                                disabled={isSubmitting}
+                                sx={{
+                                    backgroundColor: 'goldenrod',
+                                    color: 'white',
+                                    '&:hover': {
+                                        backgroundColor: '#daa520',
+                                    },
+                                }}
+                            >
+                                {isSubmitting ? 'Loading...' : 'Submit'}
+                            </Button>
+                        </Box>
 
-                            <p className='mt-5' style={{ color: "grey" }}>Already have an account, Click here to <Link to={'/login'}> <span style={{ color: 'orange' }}>Login</span> </Link></p>
-                        </form>
-
-                    </div>
-                </div>
-                <div className="col-md-2"></div>
-
-            </div>
-
-        </div>
+                        <Typography sx={{ mt: 3 }} color="gray">
+                            Already have an account?{' '}
+                            <Link to="/login" style={{ color: 'orange' }}>
+                                Login
+                            </Link>
+                        </Typography>
+                    </Grid>
+                </Grid>
+            </Box>
+        </form>
     );
 }
 

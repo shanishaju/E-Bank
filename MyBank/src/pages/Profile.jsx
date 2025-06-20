@@ -96,37 +96,37 @@ function Profile() {
                             <p>Edit Profile</p>
                         </Grid>
 
-                        <Grid item xs={12}>
-                            <Controller
-                                name="firstname"
-                                control={control}
-                                rules={{ required: 'First name is required' }}
-                                render={({ field }) => (
-                                    <TextBox
-                                        label="First Name"
-                                        {...field}
-                                        error={!!errors.firstname}
-                                        helperText={errors.firstname?.message}
-                                    />
-                                )}
-                            />
-                        </Grid>
+<Grid item xs={12} sm={6}>
+  <Controller
+    name="firstname"
+    control={control}
+    rules={{ required: 'First name is required' }}
+    render={({ field }) => (
+      <TextBox
+        label="First Name"
+        {...field}
+        error={!!errors.firstname}
+        helperText={errors.firstname?.message}
+      />
+    )}
+  />
+</Grid>
 
-                        <Grid item xs={12}>
-                            <Controller
-                                name="lastname"
-                                control={control}
-                                rules={{ required: 'Last name is required' }}
-                                render={({ field }) => (
-                                    <TextBox
-                                        label="Last Name"
-                                        {...field}
-                                        error={!!errors.lastname}
-                                        helperText={errors.lastname?.message}
-                                    />
-                                )}
-                            />
-                        </Grid>
+<Grid item xs={12} sm={6}>
+  <Controller
+    name="lastname"
+    control={control}
+    rules={{ required: 'Last name is required' }}
+    render={({ field }) => (
+      <TextBox
+        label="Last Name"
+        {...field}
+        error={!!errors.lastname}
+        helperText={errors.lastname?.message}
+      />
+    )}
+  />
+</Grid>
 
                         <Grid item xs={12}>
                             <Controller
@@ -190,44 +190,55 @@ function Profile() {
                             />
                         </Grid>
 
-                        <Grid item xs={12} md={6}>
-                            <Controller
-                                name="dob"
-                                control={control}
-                                render={({ field }) => (
-                                    <TextBox
-                                        label="DoB"
-                                        type="date"
-                                        InputProps={{ readOnly: true }}
-                                        {...field}
-                                    />
-                                )}
-                            />
-                        </Grid>
+<Grid item xs={12}>
+  <Box display="flex" alignItems="center" gap={2}>
+    {/* DoB Field */}
+    <Box flex={1}>
+      <Controller
+        name="dob"
+        control={control}
+        render={({ field }) => (
+          <TextBox
+            label="DoB"
+            type="date"
+            InputLabelProps={{ shrink: true }}
+            {...field}
+          />
+        )}
+      />
+    </Box>
 
-                        <Grid item xs={12} md={6}>
-                            <Controller
-                                name="gender"
-                                control={control}
-                                render={({ field }) => (
-                                    <FormControl component="fieldset">
-                                        <FormLabel component="legend">Gender</FormLabel>
-                                        <RadioGroup row {...field}>
-                                            <FormControlLabel
-                                                value="male"
-                                                control={<Radio disabled sx={{ color: 'green', '&.Mui-checked': { color: 'green' } }} />}
-                                                label="Male"
-                                            />
-                                            <FormControlLabel
-                                                value="female"
-                                                control={<Radio disabled sx={{ color: 'green', '&.Mui-checked': { color: 'green' } }} />}
-                                                label="Female"
-                                            />
-                                        </RadioGroup>
-                                    </FormControl>
-                                )}
-                            />
-                        </Grid>
+    {/* Gender Field */}
+    <Box flex={1}>
+      <FormControl>
+        <FormLabel>Gender</FormLabel>
+        <RadioGroup row value={control._formValues.gender || ''}>
+          <FormControlLabel
+            value="male"
+            control={
+              <Radio
+                disabled
+                sx={{ color: 'green', '&.Mui-checked': { color: 'green' } }}
+              />
+            }
+            label="Male"
+          />
+          <FormControlLabel
+            value="female"
+            control={
+              <Radio
+                disabled
+                sx={{ color: 'green', '&.Mui-checked': { color: 'green' } }}
+              />
+            }
+            label="Female"
+          />
+        </RadioGroup>
+      </FormControl>
+    </Box>
+  </Box>
+</Grid>
+
 
                         <Grid item xs={12} md={12}>
                             <Box display="flex" justifyContent="center" className="mt-4">
