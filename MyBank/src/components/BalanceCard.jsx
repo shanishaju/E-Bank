@@ -10,7 +10,7 @@ function BalanceCard() {
     const userData = sessionStorage.getItem("existinguser");
     const parseData = JSON.parse(userData);
     const balance = parseData.balance
-    console.log("balance", balance);
+    // console.log("balance", balance);
 
 
     const toggleBalanceVisibility = () => {
