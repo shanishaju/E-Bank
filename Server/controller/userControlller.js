@@ -97,7 +97,8 @@ exports.loginController = async (req, res) => {
         user: {
                 firstname: existingUser.firstname,
                 lastname: existingUser.lastname,
-                balance: existingUser.balance
+                balance: existingUser.balance,
+                kycstatus: existingUser.kycStatus,
               },
         token: token
       });

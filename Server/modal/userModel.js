@@ -43,7 +43,13 @@ const userSchema = new mongoose.Schema({
   },
     address: {
       type: String,
-    }
+  },
+    kycStatus: {
+    type: String,
+    enum: ['pending', 'under_review', 'approved', 'rejected'],
+    default: 'pending',
+  },
+
 });
 
 const User = mongoose.model("User", userSchema);
