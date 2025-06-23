@@ -32,7 +32,7 @@ const calculateAge = (dob) => {
 
 // Register function
 exports.registerController = async (req, res) => {
-  const { fname, lname, gender, dateOfBirth, email, phonenum, password,accountCategory,accountCurrency,accountPurpose,country,province,district,street,houseNo,wardNo,pincode } =
+  const { fname, lname, gender, dateOfBirth, email, phonenum, password, accountCategory, accountCurrency, accountPurpose, country, province, district, street, houseNo, wardNo, pincode } =
     req.body;
 
   try {
@@ -82,8 +82,6 @@ exports.registerController = async (req, res) => {
       houseNo,
       wardNo,
       pincode 
-
-
     });
 
     await newUser.save();
@@ -159,11 +157,11 @@ exports.getBalanceController = async (req, res)=>{
 exports.updateProfileController = async (req, res) => {
   try {
     const userId = req.user.userId; 
-    const { firstname, lastname, email, phone, address } = req.body;
+    const { firstname, lastname, email, phone } = req.body;
 
     const updatedUser = await User.findByIdAndUpdate(
       userId,
-      { firstname, lastname, email, phone, address },
+      { firstname, lastname, email, phone },
       { new: true, runValidators: true }
     );
 

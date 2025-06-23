@@ -65,7 +65,7 @@ const userSchema = new mongoose.Schema({
   houseNo: {
     type: String,
     required: true,
-  },git 
+  },
   wardNo: {
     type: String,
     required: true,
