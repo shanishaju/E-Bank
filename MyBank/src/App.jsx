@@ -7,6 +7,7 @@ import AboutUs from './pages/AboutUs'
 import Login from './pages/Login'
 import { Toaster } from 'sonner'
 import Profile from './pages/Profile'
+import KycVerification from './pages/KycVerification'
 import './App.css'
 
 
@@ -21,6 +22,7 @@ function App() {
         <Route path='login' element={<Login/>}/>
         <Route path='/about' element={<AboutUs/>} />
         <Route path='/my-profile' element={<Profile/>}/>
+        <Route path= '/kyc-verification' element={<KycVerification/>}/>
 
       </Routes>
 

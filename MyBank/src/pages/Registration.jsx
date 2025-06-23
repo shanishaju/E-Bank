@@ -51,7 +51,7 @@ function Registration() {
 
     };
     const handleCancel = () => {
-        reset(); // Reset all form fields
+        reset();
     };
 
     return (

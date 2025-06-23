@@ -1,153 +1,160 @@
-
-import React from 'react'
-import image from '../assets/revenue-growth.gif'
-import { Button, TextField } from '@mui/material'
-import { loginApi } from '../services/allApi';
+import React from 'react';
+import {
+  Box,
+  Button,
+  Grid,
+  Typography,
+  Paper,
+} from '@mui/material';
 import { useForm } from 'react-hook-form';
+import { loginApi } from '../services/allApi';
 import { Link, useNavigate } from 'react-router-dom';
-import { toast } from 'sonner'
+import { toast } from 'sonner';
 import TextBox from '../components/FormElements/TextBox';
 
-
 function Login() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const { register, handleSubmit, formState: { errors, isSubmitting}, reset } = useForm({
-    mode: "onChange"
-  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm({ mode: 'onChange' });
+
   const onSubmit = async (data) => {
     try {
       const result = await loginApi(data);
       if (result.status === 200) {
-        // toast.success(result.data.message)
-        //token storing to session storage
-        sessionStorage.setItem("existinguser", JSON.stringify(result.data.user))
-        sessionStorage.setItem("token", result.data.token)
-        // console.log("user",result.data.user);
-        // console.log('token',result.data.token);
-        reset()
+        sessionStorage.setItem('existinguser', JSON.stringify(result.data.user));
+        sessionStorage.setItem('token', result.data.token);
+        reset();
         setTimeout(() => {
-          navigate('/account')
-        }, 1000)
-
+          navigate('/account');
+        }, 1000);
       } else {
-        toast.error(`Error: ${result.response.data.message}`)
+        toast.error(`Error: ${result.response.data.message}`);
       }
-
+    } catch (error) {
+      toast.error(error.message);
     }
-    catch (error) {
-      toast.error(error.message)
-
-    }
-  }
+  };
 
   const handleCancel = () => {
-    reset(); // Reset all form fields
+    reset();
   };
 
   return (
-    <>
-      <div className="container mainclass " style={{ paddingTop: "100px", height: "100vh" }}>
-        <div className="row maindiv" style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <div className="col-md-2"></div>
-          <div className="col-md-8"
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "white",
-              fontSize: "20px",
-            }}>
-            <img src={image} alt="" width="50%" />
-            <h2>Your Bank</h2>
-            <p>Your perfect bank partner Your perfect bank partner</p>
-            <button style={{
-              backgroundColor: "white", // Primary color
-              marginTop: "20px",
-              color: "#ff8500",
-              border: "none",
-              padding: "12px 24px",
-              fontSize: "16px",
-              borderRadius: "8px",
-              cursor: "pointer",
-            }
-            }
-            >
-              View More
-            </button>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Grid
+        container
+        justifyContent="center"
+        alignItems="center"
+        style={{ minHeight: '100vh' }}
+      >
+        <Grid item xs={11} sm={10} md={8} lg={6}>
+          <Typography
+            variant="h5"
+            color="goldenrod"
+            fontWeight="semi-bold"
+            gutterBottom
+            textAlign="center"
+            marginBottom={4}
+          >
+            Login to Your Account
+          </Typography>
+          <Paper
+            elevation={2}
+            sx={{
+              p: 6,
+              minHeight: '450px',
+              borderRadius: '',
+              backgroundColor: '#ffffff',
+            }}
+          >
+
+            <Grid container spacing={3} sx={{ mt: 2 }}>
+              <Grid item xs={12}>
+                <TextBox
+                  label="Email"
+                  {...register('email', {
+                    required: 'Email is required',
+                    pattern: {
+                      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                      message: 'Enter a valid email',
+                    },
+                  })}
+                  error={!!errors.email}
+                  helperText={errors.email?.message}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextBox
+                  label="Password"
+                  type="password"
+                  {...register('password', {
+                    required: 'Password is required',
+                  })}
+                  error={!!errors.password}
+                  helperText={errors.password?.message}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} md={6}>
+                    <Button
+                      variant="contained"
+                      fullWidth
+                      onClick={handleCancel}
+                      sx={{
+                        backgroundColor: 'white',
+                        color: 'gray',
+                        '&:hover': {
+                          backgroundColor: 'gray',
+                          color: 'white',
+                        },
+                      }}
+                    >
+                      Clear
+                    </Button>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <Button
+                      type="submit"
+                      fullWidth
+                      variant="contained"
+                      disabled={isSubmitting}
+                      sx={{
+                        backgroundColor: 'goldenrod',
+                        color: 'white',
+                        '&:hover': {
+                          backgroundColor: '#daa520',
+                        },
+                      }}
+                    >
+                      {isSubmitting ? 'Loading...' : 'Login'}
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Grid>
 
 
-          </div>
-
-          <div className="col-md-4 formdiv" style={{
-            width: "50%", backgroundColor: "white", borderRadius: "100px 0px 0px 100px", overflow: 'hidden', borderLeft: "6px dotted #284c7e"
-
-
-          }}>
-            <h1 className="text-center text-3xl text-gray-500" style={{ color: "grey", marginTop: "50px" }}>
-              Login
-            </h1>
-
-            <div className="bg-light formbox p-4 rounded" style={{ width: "100%", backgroundColor: "white" }}>
-              <form className="mt-3" onSubmit={handleSubmit(onSubmit)}>
-                <div className="mb-3" style={{ display: "flex", marginBottom: "10px" }}>
-                </div>
-                <div className="mb-3" style={{ marginBottom: "10px" }}>
-                  <TextBox
-                    label="Email"
-
-                    {...register('email', {
-                      required: "Email is required",
-                      pattern: {
-                        value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                        message: "Enter a valid email address"
-                      }
-                    })}
-
-                    error={!!errors.email}
-                    helperText={errors.email?.message}
-
-                  />
-                </div>
-                <div className="mb-3" style={{ marginBottom: "10px" }}>
-                  <TextBox
-                    label="Password"
-                    type='password'
-
-                    {...register('password', {
-                      required: "Password is required",
-                      //regex
-                      // pattern: {
-                      //   value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&*()_+])[A-Za-z\d@#$%^&*()_+]{8,}$/,
-                      //   message: "Password should include at least one uppercase letter, one lowercase letter, one number, and one special character "
-                      // }
-                    })}
-                    error={!!errors.password}
-                    helperText={errors.password?.message}
-                  />
-                </div>
-                <div style={{ marginBottom: "10px", display: "flex", justifyContent: "space-between", gap: "10px" }}>
-                  <Button className='button2' variant="contained" style={{ flex: 1, height: "50px" }} onClick={handleCancel} >
-                    CLEAR
-                  </Button>
-                  <Button className='button1' type="submit" style={{ flex: 1, height: "50px" }} variant="contained" disabled={isSubmitting}>
-                    {isSubmitting ? 'Loading...' : 'Login'}
-                  </Button>
-                </div>
-                <p className='mt-5' style={{ color: "grey" }}>New user? Click here to  <Link to={'/register'}> <span style={{ color: 'orange' }}>Register</span> </Link></p>
-
-              </form>
-            </div>
-          </div>
-          <div className="col-md-2"></div>
-        </div>
-      </div>
-
-
-    </>
-  )
+              <Grid item xs={12}>
+                <Typography textAlign="left" color="gray">
+                  New user?{' '}
+                  <Link to="/register" style={{ color: 'orange', textDecoration: 'none' }}>
+                    Register
+                  </Link>
+                </Typography>
+              </Grid>
+            </Grid>
+          </Paper>
+        </Grid>
+      </Grid>
+    </form>
+  );
 }
 
-export default Login
-
+export default Login;
