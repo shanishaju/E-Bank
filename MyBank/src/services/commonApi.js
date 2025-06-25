@@ -1,23 +1,3 @@
-// import axios from "axios"
-
-
-
-// export const commonApi  = async(httpRequest, url, reqBody, reqHeader)=>{
-
-//     const reqConfig ={
-//         method:httpRequest,
-//         url,
-//         data:reqBody,
-//         headers:reqHeader?reqHeader:{"Content-Type":"application/json"}
-
-//     }
-
-//    return await axios(reqConfig).then((result)=>{
-//         return result
-//     }).catch((error)=>{
-//         return error
-//     })
-// }
 import axios from "axios"
 
 
@@ -27,9 +7,11 @@ export const commonApi  = async(httpRequest, url, reqBody, reqHeader)=>{
       // Check if the URL is NOT login or register
   const isAuthApi = url.includes('/login') || url.includes('/register');
     
+  const isFormData = reqBody instanceof FormData; 
+
    // Default headers with token (only if not login or register)
   const defaultHeaders = {
-    "Content-Type": "application/json",
+    ...(isFormData ? {} : { "Content-Type": "application/json" }),
     ...(token && !isAuthApi && { Authorization: token }),
   };
   // If custom headers are passed, merge them with defaults
@@ -38,7 +20,7 @@ export const commonApi  = async(httpRequest, url, reqBody, reqHeader)=>{
     const reqConfig ={
         method:httpRequest,
         url,
-        data:reqBody,
+        data: isFormData ? reqBody : JSON.stringify(reqBody),
         headers,
 
     }

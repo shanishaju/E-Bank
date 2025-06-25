@@ -12,6 +12,7 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import TextBox from '../components/FormElements/TextBox';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
+import { KycVerificationApi } from '../services/allApi';
 
 function KycVerification() {
   const [tab, setTab] = useState(0);
@@ -24,15 +25,34 @@ function KycVerification() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    reset
+    reset,
   } = useForm({ mode: 'onChange' });
 
-  const onSubmit = (data) => {
-    console.log("KYC Submitted: ", data);
-    toast.success("Verification submitted");
-    reset();
-    setIdFileName('');
-    setPhotoFileName('');
+
+  const onSubmit = async (data) => {
+    try {
+      // console.log("Form Data:", data);
+      
+      const formData = new FormData();
+      formData.append('idNumber', data.idNumber);
+      formData.append('idFile', data.idFile[0]);
+      formData.append('photo', data.photo[0]);
+      formData.append('idType', tab === 0 ? 'Aadhaar' : 'Passport');
+  
+      const response = await KycVerificationApi(formData);
+
+      if (response.status === 200) {
+        toast.success("KYC submitted successfully!");
+        reset();
+        setIdFileName('');
+        setPhotoFileName('');
+      } else {
+        toast.error("KYC submission failed");
+      }
+    } catch (error) {
+      toast.error("Error submitting KYC");
+      console.error("KYC Error:", error);
+    }
   };
 
   return (
