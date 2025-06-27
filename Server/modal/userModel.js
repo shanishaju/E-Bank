@@ -1,4 +1,3 @@
-
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
@@ -10,10 +9,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  accountnum:{
-    type: Number, 
+  accountnum: {
+    type: Number,
     unique: true,
-    index: true
+    index: true,
   },
   dob: {
     type: String,
@@ -36,16 +35,22 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-    balance: {
+  balance: {
     type: Number,
     default: 0,
   },
-    kycStatus: {
+  kycStatus: {
     type: String,
-    enum: ['pending', 'under_review', 'approved', 'rejected'],
-    default: 'pending',
+    enum: ["pending", "under_review", "approved", "rejected"],
+    default: "pending",
   },
-  
+  kyc: {
+    idType: String,
+    idNumber: String,
+    idFilePath: String,
+    photoPath: String,
+  },
+
   country: {
     type: String,
     required: true,
@@ -74,23 +79,21 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-    accountCategory: {
+  accountCategory: {
     type: String,
-    enum: ['Saving', 'Current'],
+    enum: ["Saving", "Current"],
     required: true,
   },
   accountCurrency: {
     type: String,
-    enum: ['INR', 'USD'],
+    enum: ["INR", "USD"],
     required: true,
   },
   accountPurpose: {
     type: String,
-    enum: ['Personal', 'Business'],
+    enum: ["Personal", "Business"],
     required: true,
   },
-
-
 });
 const User = mongoose.model("User", userSchema);
-module.exports= User
+module.exports = User;

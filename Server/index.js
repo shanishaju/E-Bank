@@ -1,32 +1,45 @@
-//import dotenv //to load environment variables
-require('dotenv').config()
-//import express
-const express = require('express')
-//import cors
-const cors = require('cors')
+// Load environment variables
+require("dotenv").config();
 
-//import router
-const router = require('./routes')
+// Import core modules
+const express = require("express");
+const cors = require("cors");
+const path = require("path");
 
-//import connection.js
-require('./connection')
+// Import router
+const router = require("./routes");
 
-//create server
-const pfServer = express()
-//use cors //cors use to communicate with the view
-pfServer.use(cors())
-//use json() //Returns middleware that only parses json 
-pfServer.use(express.json())
-//use router 
-pfServer.use(router)
-//setting port for server
-PORT = 4000 || process.env.PORT
-//listen to the port
+// Connect to MongoDB
+require("./connection");
+
+// Initialize express app
+const pfServer = express();
+
+// Enable CORS for all requests
+pfServer.use(cors());
+
+// Parse incoming JSON requests
+pfServer.use(express.json());
+
+// Serve static files from uploads folder (important for accessing uploaded files)
+pfServer.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+// Use your defined routes
+pfServer.use(router);
+
+//Handle Multer or file upload errors gracefully
+// const multer = require('multer');
+// pfServer.use((err, req, res, next) => {
+//   if (err instanceof multer.MulterError || err.message.includes('Only .png')) {
+//     return res.status(400).json({ message: err.message });
+//   }
+//   next(err);
+// });
+
+// Set server port
+const PORT = process.env.PORT || 4000;
+
+// Start the server
 pfServer.listen(PORT, () => {
-    console.log(`Server is running successfully at port : ${PORT}`)
-    })
-    
-    //server tested
-    // pfServer.get('/',(req,res)=>{
-    //     res.send('Hello from server')
-    // })
+  console.log(`✅ Server running at http://localhost:${PORT}`);
+});

@@ -32,11 +32,46 @@ const calculateAge = (dob) => {
 
 // Register function
 exports.registerController = async (req, res) => {
-  const { fname, lname, gender, dateOfBirth, email, phonenum, password, accountCategory, accountCurrency, accountPurpose, country, province, district, street, houseNo, wardNo, pincode } =
-    req.body;
+  const {
+    fname,
+    lname,
+    gender,
+    dateOfBirth,
+    email,
+    phonenum,
+    password,
+    accountCategory,
+    accountCurrency,
+    accountPurpose,
+    country,
+    province,
+    district,
+    street,
+    houseNo,
+    wardNo,
+    pincode,
+  } = req.body;
 
   try {
-    if (!fname || !lname || !gender || !dateOfBirth || !email || !phonenum || !password || !accountCategory || !accountCurrency || !accountPurpose || !country || !province || !district || !street || !houseNo || !wardNo || !pincode ) {
+    if (
+      !fname ||
+      !lname ||
+      !gender ||
+      !dateOfBirth ||
+      !email ||
+      !phonenum ||
+      !password ||
+      !accountCategory ||
+      !accountCurrency ||
+      !accountPurpose ||
+      !country ||
+      !province ||
+      !district ||
+      !street ||
+      !houseNo ||
+      !wardNo ||
+      !pincode
+    ) {
       return res.status(400).json({ message: "All fields are required!" });
     }
 
@@ -47,14 +82,16 @@ exports.registerController = async (req, res) => {
     // Validate Age
     const age = calculateAge(dateOfBirth);
     if (age < 18) {
-      return res.status(400).json({ message: "You must be at least 18 years old to register." });
+      return res
+        .status(400)
+        .json({ message: "You must be at least 18 years old to register." });
     }
 
     const existingUser = await User.findOne({ phone: phonenum });
     if (existingUser) {
       return res.status(400).json({
-          message: "This number is already registered with another account",
-        });
+        message: "This number is already registered with another account",
+      });
     }
 
     // Generate new account number
@@ -81,13 +118,15 @@ exports.registerController = async (req, res) => {
       street,
       houseNo,
       wardNo,
-      pincode 
+      pincode,
     });
 
     await newUser.save();
     return res.status(200).json({ message: "Account created successfully" });
   } catch (error) {
-    return res.status(500).json({ message: `Registration failed due to ${error.message}` });
+    return res
+      .status(500)
+      .json({ message: `Registration failed due to ${error.message}` });
   }
 };
 
@@ -101,23 +140,27 @@ exports.loginController = async (req, res) => {
     const existingUser = await User.findOne({ email, password });
     if (existingUser) {
       //jwt token generation
-      const token = jwt.sign({userId:existingUser._id},'supersecretkey');
+      const token = jwt.sign({ userId: existingUser._id }, "supersecretkey");
 
-      return res.status(200).json({ 
-        message: "Login successful", 
+      return res.status(200).json({
+        message: "Login successful",
         user: {
-                firstname: existingUser.firstname,
-                lastname: existingUser.lastname,
-                balance: existingUser.balance,
-                kycstatus: existingUser.kycStatus,
-              },
-        token: token
+          firstname: existingUser.firstname,
+          lastname: existingUser.lastname,
+          balance: existingUser.balance,
+          kycstatus: existingUser.kycStatus,
+        },
+        token: token,
       });
     } else {
-      return res.status(400).json({ message: "Email or password doesn't match" });
+      return res
+        .status(400)
+        .json({ message: "Email or password doesn't match" });
     }
   } catch (error) {
-    return res.status(500).json({ message: `Login failed due to ${error.message}` });
+    return res
+      .status(500)
+      .json({ message: `Login failed due to ${error.message}` });
   }
 };
 
@@ -125,7 +168,9 @@ exports.loginController = async (req, res) => {
 exports.getAccountDetails = async (req, res) => {
   try {
     const userId = req.user.userId; // from decoded token
-    const userDetails = await User.findById(userId).select("firstname lastname email phone dob gender address");
+    const userDetails = await User.findById(userId).select(
+      "firstname lastname email phone dob gender address"
+    );
 
     if (!userDetails) {
       return res.status(404).json({ message: "User not found." });
@@ -133,22 +178,26 @@ exports.getAccountDetails = async (req, res) => {
 
     return res.status(200).json({ userDetails });
   } catch (error) {
-    return res.status(500).json({ message: `Failed to fetch account details: ${error.message}` });
+    return res
+      .status(500)
+      .json({ message: `Failed to fetch account details: ${error.message}` });
   }
 };
 
 //get balance
-exports.getBalanceController = async (req, res)=>{
-  try{
-    const userId = req.user.userId
-    const user = await User.findById(userId).select('balance')
+exports.getBalanceController = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const user = await User.findById(userId).select("balance");
 
-    if(!user){
+    if (!user) {
       return res.status(404).json({ message: "User not found." });
     }
     return res.status(200).json({ balance: user.balance });
   } catch (error) {
-    return res.status(500).json({ message: `Failed to fetch balance: ${error.message}` });
+    return res
+      .status(500)
+      .json({ message: `Failed to fetch balance: ${error.message}` });
   }
 };
 
@@ -156,7 +205,7 @@ exports.getBalanceController = async (req, res)=>{
 
 exports.updateProfileController = async (req, res) => {
   try {
-    const userId = req.user.userId; 
+    const userId = req.user.userId;
     const { firstname, lastname, email, phone } = req.body;
 
     const updatedUser = await User.findByIdAndUpdate(
@@ -173,10 +222,56 @@ exports.updateProfileController = async (req, res) => {
       message: "Profile updated successfully",
     });
   } catch (error) {
-    return res.status(500).json({ message: `Profile update failed: ${error.message}` });
+    return res
+      .status(500)
+      .json({ message: `Profile update failed: ${error.message}` });
   }
 };
 
+//kyc verification
+exports.kycVerificationController = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const { idNumber, idType } = req.body;
 
+    if (!idNumber || !idType || !req.files?.idFile || !req.files?.photo) {
+      return res
+        .status(400)
+        .json({ message: "All fields and files are required" });
+    }
 
+    //  Fetch the user first
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
+    // Checked if KYC was already submitted
+    if (user.kycStatus !== "pending") {
+      return res.status(400).json({ message: "KYC already submitted." });
+    }
+
+    // Extract uploaded file paths
+    const idFilePath = req.files.idFile[0].path;
+    const photoPath = req.files.photo[0].path;
+
+    // Update user with KYC details
+    user.kyc = {
+      idType,
+      idNumber,
+      idFilePath,
+      photoPath,
+    };
+    user.kycStatus = "under_review";
+    await user.save();
+
+    return res.status(200).json({
+      message: "KYC submitted successfully",
+      kycStatus: user.kycStatus,
+      kyc: user.kyc,
+    });
+  } catch (error) {
+    console.error("KYC submission error:", error);
+    return res.status(500).json({ message: `KYC failed: ${error.message}` });
+  }
+};
