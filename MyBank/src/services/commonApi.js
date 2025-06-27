@@ -1,33 +1,36 @@
-import axios from "axios"
+import axios from "axios";
 
+export const commonApi = async (httpRequest, url, reqBody, reqHeader) => {
+  const token = sessionStorage.getItem("token");
 
-export const commonApi  = async(httpRequest, url, reqBody, reqHeader)=>{
-    
-    const token = sessionStorage.getItem('token')
-      // Check if the URL is NOT login or register
-  const isAuthApi = url.includes('/login') || url.includes('/register');
-    
-  const isFormData = reqBody instanceof FormData; 
+  // Determine if request is to /login or /register
+  const isAuthApi = url.includes("/login") || url.includes("/register");
 
-   // Default headers with token (only if not login or register)
+  // Check if the body is FormData (used in file uploads like KYC)
+  const isFormData = reqBody instanceof FormData;
+
+  // Set default headers
   const defaultHeaders = {
     ...(isFormData ? {} : { "Content-Type": "application/json" }),
     ...(token && !isAuthApi && { Authorization: token }),
   };
-  // If custom headers are passed, merge them with defaults
+
+  // Merge with any custom headers passed
   const headers = reqHeader ? { ...defaultHeaders, ...reqHeader } : defaultHeaders;
 
-    const reqConfig ={
-        method:httpRequest,
-        url,
-        data: isFormData ? reqBody : JSON.stringify(reqBody),
-        headers,
+  // Configure Axios request
+  const reqConfig = {
+    method: httpRequest,
+    url,
+    data: isFormData ? reqBody : JSON.stringify(reqBody),
+    headers,
+  };
 
-    }
-
-   return await axios(reqConfig).then((result)=>{
-        return result
-    }).catch((error)=>{
-        return error
-    })
-}
+  // Make the API call
+  return await axios(reqConfig)
+    .then((result) => result)
+    .catch((error) => {
+      // console.error("API Error:", error.response?.data || error.message);
+      return error;
+    });
+};

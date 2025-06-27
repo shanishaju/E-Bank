@@ -19,5 +19,5 @@ export const UpdateProfileApi = async (reqBody)=>{
   return await commonApi('PUT',`${serverUrl}/updateprofile`, reqBody, "");
 }
 export const KycVerificationApi = async (reqBody) => {
-  return await commonApi('POST', `${serverUrl}/kycverification`, reqBody, "");
+  return await commonApi('POST', `${serverUrl}/kycverification`, reqBody, null);
 }
